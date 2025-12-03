@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Medication Reminder (No Image Upload)</title>
+  <style>
+    :root{
+      --bg:#f6f7fb; --card:#fff; --accent:#2b6cb0; --muted:#6b7280;
+      --ok:#16a34a; --danger:#ef4444; --warning:#f59e0b;
+      --glass: rgba(255,255,255,0.6);
+      font-family: Sarabun, Inter, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; background: linear-gradient(180deg,#eef2ff 0%,var(--bg) 100%);
+      color:#0f172a; padding:20px; min-height:100vh;
+    }
+    .container{max-width:1200px;margin:0 auto;}
+    
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+    h1{font-size:22px;margin:0;color:var(--accent);}
+    p.lead{margin:0;color:var(--muted);font-size:14px;}
+    
+    .card{background:var(--card);border-radius:12px;padding:20px;box-shadow:0 4px 15px rgba(0,0,0,0.05); margin-bottom: 16px;}
+    
+    .grid{display:grid;grid-template-columns:1.2fr 0.8fr;gap:20px;}
+    @media (max-width:900px){ .grid{grid-template-columns:1fr} }
+
+    /* Form Elements */
+    form .row{display:flex;gap:10px;margin-bottom:12px}
+    label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+    input[type="text"], input[type="number"], input[type="datetime-local"], select{
+      width:100%;padding:10px;border-radius:8px;border:1px solid #e5e7eb;background:#fff;font-size:14px;
+    }
+    button{padding:10px 16px;border-radius:8px;border:0;background:var(--accent);color:#fff;cursor:pointer;font-size:14px;transition:0.2s}
+    button:hover{opacity:0.9}
+    button.ghost{background:transparent;border:1px solid #e5e7eb;color:var(--muted)}
+    
+    /* Table */
+    table{width:100%;border-collapse:collapse;margin-top:10px}
+    th, td{padding:12px 10px;text-align:left;border-bottom:1px solid #f1f5f9;font-size:14px}
+    th{color:var(--muted);font-weight:600;background:#f9fafb;}
+    
+    /* Status Pills */
+    .pill{display:inline-flex;padding:4px 8px;border-radius:6px;font-size:12px;font-weight:600;align-items:center;}
+    .pill.green{background:#ecfdf5;color:var(--ok);}
+    .pill.red{background:#fff1f2;color:var(--danger);}
+    .pill.high-alert{background:#fef2f2;color:#dc2626;border:1px solid #fee2e2;margin-left:6px;animation:pulse 2s infinite;}
+    
+    @keyframes pulse { 0%{opacity:1;} 50%{opacity:0.7;} 100%{opacity:1;} }
+
+    /* Guideline Section Styles */
+    .guide-content { font-size: 14px; line-height: 1.6; color: #374151; }
+    /* ลบ margin-top ของ h4 ตัวแรกออก เพื่อให้ชิดขอบบน */
+    .guide-content h4 { color: var(--accent); margin: 0 0 8px 0; border-bottom: 1px solid #e5e7eb; padding-bottom: 4px; font-size: 15px; }
+    .guide-content h4:not(:first-child) { margin-top: 16px; } /* คืนค่า margin-top ให้ h4 ตัวอื่นๆ */
+    .guide-content ul { padding-left: 20px; margin: 0; }
+    .guide-content li { margin-bottom: 6px; }
+    .guide-content b { color: #111827; }
+    .text-danger { color: var(--danger); font-weight: bold; }
+    
+    .credit-badge {
+        background-color: #f0f9ff; border: 1px solid #bae6fd; color: #0369a1;
+        padding: 8px; border-radius: 6px; font-size: 13px; margin-bottom: 15px;
+        display: flex; align-items: center; gap: 6px;
+    }
+
+    /* --- ลบ CSS ของ Image Upload Box ออก --- */
+    
+    .toast{position:fixed;right:20px;bottom:20px;background:#1e293b;color:#fff;padding:12px 20px;border-radius:8px;box-shadow:0 10px 15px -3px rgba(0,0,0,0.1);z-index:100;opacity:0;transition:0.3s}
+    .switch{position:relative;width:40px;height:24px;background:#e2e8f0;border-radius:20px;transition:0.3s}
+    .switch input{opacity:0;width:0;height:0}
+    .knob{position:absolute;cursor:pointer;top:2px;left:2px;right:0;bottom:0;background-color:#fff;transition:.4s;width:20px;height:20px;border-radius:50%}
+    input:checked + .knob{transform:translateX(16px);}
+    input:checked ~ .switch{background-color:var(--accent);}
+    
+    footer { margin-top: 20px; text-align: center; font-size: 13px; color: var(--muted); padding-bottom: 20px; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div>
+      <h1>Medication Reminder</h1>
+      <p class="lead">ระบบช่วยจำการให้ยา Fentanyl Patch (High Alert)</p>
+    </div>
+    <div style="display:flex;gap:10px">
+      <button id="reqPermBtn">🔔 เปิดเสียงเตือน</button>
+      <button class="ghost" onclick="exportData()">Export</button>
+      <button class="ghost" onclick="document.getElementById('fileInput').click()">Import</button>
+      <input type="file" id="fileInput" hidden accept=".json">
+    </div>
+  </header>
+
+  <div class="grid">
+    <div>
+      <div class="card">
+        <h3 style="margin-top:0">บันทึกการให้ยาใหม่</h3>
+        <form id="medForm">
+          <input type="hidden" id="medId">
+          <div class="row">
+            <div style="flex:1">
+              <label>ชื่อยา</label>
+              <input type="text" id="medName" value="Fentanyl Patch" required>
+            </div>
+            <div style="width:120px">
+              <label>ความถี่ (ชม.)</label>
+              <select id="interval">
+                <option value="72" selected>72 (3 วัน)</option>
+                <option value="24">24 (1 วัน)</option>
+                <option value="48">48 (2 วัน)</option>
+                <option value="168">168 (1 สัปดาห์)</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div style="flex:1">
+              <label>เริ่มแปะเมื่อ (เวลา)</label>
+              <input type="datetime-local" id="startAt">
+            </div>
+            <div style="width:120px">
+              <label>จำนวน (แผ่น)</label>
+              <input type="number" id="qty" value="1" min="1" style="text-align:center">
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px">
+            <div>
+               <button type="submit">บันทึกรายการ</button>
+               <button type="button" class="ghost" onclick="resetForm()">ล้างค่า</button>
+            </div>
+            <small style="color:var(--muted)">Auto-saved</small>
+          </div>
+        </form>
+      </div>
+
+      <div class="card" style="min-height:300px">
+        <h3 style="margin-top:0;display:flex;justify-content:space-between">
+            รายการที่ต้องติดตาม 
+            <span style="font-size:14px;font-weight:400;color:var(--muted)" id="clock">--:--</span>
+        </h3>
+        <div id="listWrap"></div>
+      </div>
+    </div>
+
+    <aside>
+      <div class="card guide-content">
+        <div class="credit-badge">
+            🏅 เครดิตข้อมูล: <b>พว.วิษณุกรณ์ โอยา (รพ.ชลบุรี)</b>
+        </div>
+
+        <h3 style="margin-top:0;color:#1e3a8a;margin-bottom:15px;">📖 คู่มือ Fentanyl Patch</h3>
+        
+        <h4>1) การเตรียมผิวหนังและตำแหน่ง</h4>
+        <ul>
+            <li><b>ตำแหน่งที่เหมาะสม:</b> หน้าอกส่วนบน, หลังส่วนบน, ชายโครงด้านข้าง, ต้นแขนด้านนอก</li>
+            <li><b>หลีกเลี่ยง:</b> แผล, ผื่น, ข้อพับ, ผิวมัน/ทาครีม</li>
+            <li><b>ขน:</b> ใช้กรรไกรเล็มสั้น <span class="text-danger">ห้ามโกน</span> (ป้องกันการระคายเคือง/ดูดซึมยาเร็วเกินไป)</li>
+        </ul>
+
+        <h4>2) การเปิดซองและลอกแผ่น</h4>
+        <ul>
+            <li>แกะซองด้วยมือเปล่า (เลี่ยงกรรไกรโดนแผ่นยา)</li>
+            <li>ลอกฟิล์มทีละฝั่ง <b>ห้ามจับด้านกาว</b></li>
+        </ul>
+
+        <h4>3) การติดแผ่นยา</h4>
+        <ul>
+            <li>แปะลงบนผิวที่เตรียมไว้</li>
+            <li><b>ใช้ฝ่ามือกดแน่นๆ 20-30 วินาที</b> ให้แนบสนิท</li>
+            <li>หลังติดเสร็จ ให้ล้างมือด้วยสบู่ทันที</li>
+        </ul>
+
+        <h4>4) ข้อควรระวัง (Strictly)</h4>
+        <ul>
+            <li><span class="text-danger">ห้ามโดนความร้อน</span> (อาบน้ำร้อน/ประคบ) เพราะยาจะดูดซึมเร็วเกินไป (Overdose)</li>
+            <li>หากแผ่นลอก ให้ใช้เทปทางการแพทย์ติดทับ (ห้ามใช้พลาสเตอร์ธรรมดา)</li>
+            <li><b>เปลี่ยนทุก 72 ชม. (3 วัน)</b> และวนตำแหน่งไม่ซ้ำเดิม</li>
+            <li>แผ่นเก่าให้พับด้านกาวประกบกันก่อนทิ้ง</li>
+        </ul>
+      </div>
+      
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+            <span>สถานะตรวจสอบอัตโนมัติ</span>
+            <label class="switch">
+                <input type="checkbox" id="autoCheck" checked>
+                <span class="knob"></span>
+                <span class="switch" style="width:100%;height:100%;display:block;border-radius:20px;"></span>
+            </label>
+        </div>
+        <div style="margin-top:10px;display:flex;gap:10px">
+             <button class="ghost" style="flex:1;font-size:12px" onclick="testAlarm()">🔊 ทดสอบเสียง</button>
+             <button class="ghost" style="flex:1;font-size:12px;color:var(--danger);border-color:#fecaca" onclick="clearAll()">ล้างข้อมูล</button>
+        </div>
+      </div>
+    </aside>
+  </div>
+  
+  <footer>
+    Medication Reminder WebApp • เครดิตเนื้อหา: <b>พว.วิษณุกรณ์ โอยา (รพ.ชลบุรี)</b>
+  </footer>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+/* --- Core Logic --- */
+const DB_KEY = 'med_reminder_data_v10_noimg';
+// --- ลบ IMG_KEY ออก ---
+let items = [];
+
+// Audio Context
+let audioCtx;
+function initAudio(){ if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)(); }
+function beep(freq, duration, type, time){
+    if(!audioCtx) initAudio();
+    if(audioCtx.state === 'suspended') audioCtx.resume();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = type;
+    osc.frequency.value = freq;
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    osc.start(time);
+    gain.gain.setValueAtTime(0.5, time);
+    gain.gain.exponentialRampToValueAtTime(0.001, time+duration);
+    osc.stop(time+duration);
+}
+
+function playAlarm(isHighAlert){
+    initAudio();
+    const now = audioCtx.currentTime;
+    if(isHighAlert){
+        // High Alert: Rapid Beeps 10s
+        for(let i=0; i<20; i++){ 
+            beep(880, 0.1, 'square', now + (i*0.5));
+            beep(880, 0.1, 'square', now + (i*0.5) + 0.15);
+        }
+    } else {
+        // Normal
+        for(let i=0; i<5; i++){
+            beep(600, 0.3, 'sine', now + (i*2));
+        }
+    }
+}
+
+// Helpers
+const uid = () => Math.random().toString(36).substr(2,9);
+const nowISO = () => new Date().toISOString();
+const isFentanyl = (name) => (name||'').toLowerCase().includes('fentanyl');
+
+function save(){ localStorage.setItem(DB_KEY, JSON.stringify(items)); render(); }
+function load(){ 
+    try{ items = JSON.parse(localStorage.getItem(DB_KEY)) || []; }catch(e){ items=[]; }
+    render();
+}
+
+/* --- ลบ Logic ส่วน Image Upload ออกทั้งหมด --- */
+
+// Time Calcs
+function getNext(start, hours){
+    const s = new Date(start);
+    const n = new Date();
+    const ms = hours * 3600000;
+    let next = new Date(s.getTime() + ms);
+    if(next < n){
+        const diff = n - s;
+        const rounds = Math.ceil(diff/ms);
+        next = new Date(s.getTime() + (rounds*ms));
+    }
+    return next.toISOString();
+}
+
+function timeToText(iso){
+    const d = new Date(iso);
+    const diff = (d - new Date()) / 1000;
+    if(diff < 0) return 'เลยกำหนด!';
+    const h = Math.floor(diff/3600);
+    const m = Math.floor((diff%3600)/60);
+    if(h>24) return `อีก ${Math.round(h/24)} วัน`;
+    if(h>0) return `อีก ${h} ชม. ${m} นาที`;
+    return `อีก ${m} นาที`;
+}
+
+// Render
+function render(){
+    const div = document.getElementById('listWrap');
+    if(items.length===0){
+        div.innerHTML = '<div style="text-align:center;padding:40px;color:#cbd5e1">ยังไม่มีรายการ<br>กรอกข้อมูลด้านบนเพื่อเริ่ม</div>';
+        return;
+    }
+    items.sort((a,b)=> new Date(a.nextAt) - new Date(b.nextAt));
+    
+    let h = `<table><thead><tr><th>รายละเอียด</th><th>ครบกำหนด</th><th>สถานะ</th><th>จัดการ</th></tr></thead><tbody>`;
+    items.forEach(i => {
+        const isHigh = isFentanyl(i.name);
+        const tag = isHigh ? '<span class="pill high-alert">HIGH ALERT</span>' : '';
+        const dateStr = new Date(i.nextAt).toLocaleString('th-TH', {day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'});
+        
+        h += `<tr>
+            <td>
+                <div style="font-weight:600">${i.name} ${tag}</div>
+                <div style="font-size:12px;color:var(--muted)">เริ่ม: ${new Date(i.start).toLocaleString('th-TH')} • ${i.qty} แผ่น</div>
+            </td>
+            <td>
+                <div style="font-weight:600">${dateStr}</div>
+                <div style="font-size:12px;color:${isHigh?'var(--danger)':'var(--accent)'}">${timeToText(i.nextAt)}</div>
+            </td>
+            <td><span class="pill ${i.active?'green':'red'}">${i.active?'เปิด':'ปิด'}</span></td>
+            <td>
+                <button class="ghost" style="padding:4px 8px" onclick="toggle('${i.id}')">I/O</button>
+                <button class="ghost" style="padding:4px 8px;color:var(--danger)" onclick="del('${i.id}')">ลบ</button>
+            </td>
+        </tr>`;
+    });
+    h += '</tbody></table>';
+    div.innerHTML = h;
+}
+
+// Actions
+function addItem(e){
+    e.preventDefault();
+    initAudio();
+    const name = document.getElementById('medName').value;
+    const hrs = parseInt(document.getElementById('interval').value);
+    let start = document.getElementById('startAt').value;
+    start = start ? new Date(start).toISOString() : nowISO();
+    
+    const obj = {
+        id: uid(),
+        name: name,
+        hrs: hrs,
+        start: start,
+        nextAt: getNext(start, hrs),
+        qty: document.getElementById('qty').value,
+        active: true
+    };
+    items.push(obj);
+    save();
+    toast('เพิ่มรายการแล้ว');
+    document.getElementById('medName').value = 'Fentanyl Patch';
+    document.getElementById('startAt').value = '';
+}
+
+function toggle(id){ const i=items.find(x=>x.id==id); if(i){i.active=!i.active; save();} }
+function del(id){ if(confirm('ลบรายการ?')){ items=items.filter(x=>x.id!==id); save(); } }
+function clearAll(){ if(confirm('ลบทั้งหมด?')){ items=[]; save(); } }
+function resetForm(){ document.getElementById('medForm').reset(); document.getElementById('medName').value='Fentanyl Patch'; }
+
+// Notify
+function notify(item){
+    const isHigh = isFentanyl(item.name);
+    const msg = `ถึงเวลาให้ยา: ${item.name} (${item.qty} แผ่น)`;
+    
+    toast(msg);
+    playAlarm(isHigh);
+    
+    if(Notification.permission === 'granted'){
+        new Notification("Medication Reminder", { body: msg, requireInteraction: isHigh });
+    }
+}
+
+// Checker
+setInterval(()=>{
+    document.getElementById('clock').innerText = new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'});
+    if(!document.getElementById('autoCheck').checked) return;
+    
+    const now = new Date();
+    items.forEach(i => {
+        if(i.active && new Date(i.nextAt) <= now){
+            notify(i);
+            i.nextAt = getNext(i.nextAt, i.hrs); 
+            save();
+        }
+    });
+}, 10000); 
+
+// Utils
+function toast(msg){
+    const t = document.getElementById('toast');
+    t.innerText = msg;
+    t.style.opacity = 1;
+    setTimeout(()=> t.style.opacity=0, 4000);
+}
+
+document.getElementById('medForm').onsubmit = addItem;
+document.getElementById('reqPermBtn').onclick = () => {
+    initAudio();
+    Notification.requestPermission().then(p => toast(p==='granted'?'อนุญาตแล้ว':'ถูกปฏิเสธ'));
+};
+window.testAlarm = () => { initAudio(); playAlarm(true); toast('ทดสอบเสียง High Alert'); };
+
+// Init
+load();
+// --- ลบ loadImg() ออก ---
+const tzOffset = new Date().getTimezoneOffset() * 60000;
+const localISOTime = (new Date(Date.now() - tzOffset)).toISOString().slice(0,16);
+</script>
+</body>
+</html>
