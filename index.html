@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Medication Reminder (No Image Upload)</title>
+  <title>Fentanyl Patch Reminder</title>
   <style>
     :root{
       --bg:#f6f7fb; --card:#fff; --accent:#2b6cb0; --muted:#6b7280;
@@ -52,9 +52,8 @@
 
     /* Guideline Section Styles */
     .guide-content { font-size: 14px; line-height: 1.6; color: #374151; }
-    /* ลบ margin-top ของ h4 ตัวแรกออก เพื่อให้ชิดขอบบน */
     .guide-content h4 { color: var(--accent); margin: 0 0 8px 0; border-bottom: 1px solid #e5e7eb; padding-bottom: 4px; font-size: 15px; }
-    .guide-content h4:not(:first-child) { margin-top: 16px; } /* คืนค่า margin-top ให้ h4 ตัวอื่นๆ */
+    .guide-content h4:not(:first-child) { margin-top: 16px; } 
     .guide-content ul { padding-left: 20px; margin: 0; }
     .guide-content li { margin-bottom: 6px; }
     .guide-content b { color: #111827; }
@@ -62,12 +61,11 @@
     
     .credit-badge {
         background-color: #f0f9ff; border: 1px solid #bae6fd; color: #0369a1;
-        padding: 8px; border-radius: 6px; font-size: 13px; margin-bottom: 15px;
-        display: flex; align-items: center; gap: 6px;
+        padding: 10px; border-radius: 8px; font-size: 14px; margin-bottom: 20px;
+        display: flex; align-items: center; justify-content: center; gap: 6px; text-align: center;
+        font-weight: 500;
     }
 
-    /* --- ลบ CSS ของ Image Upload Box ออก --- */
-    
     .toast{position:fixed;right:20px;bottom:20px;background:#1e293b;color:#fff;padding:12px 20px;border-radius:8px;box-shadow:0 10px 15px -3px rgba(0,0,0,0.1);z-index:100;opacity:0;transition:0.3s}
     .switch{position:relative;width:40px;height:24px;background:#e2e8f0;border-radius:20px;transition:0.3s}
     .switch input{opacity:0;width:0;height:0}
@@ -83,7 +81,7 @@
 <div class="container">
   <header>
     <div>
-      <h1>Medication Reminder</h1>
+      <h1>Fentanyl Patch Reminder</h1>
       <p class="lead">ระบบช่วยจำการให้ยา Fentanyl Patch (High Alert)</p>
     </div>
     <div style="display:flex;gap:10px">
@@ -146,12 +144,9 @@
 
     <aside>
       <div class="card guide-content">
-        <div class="credit-badge">
-            🏅 เครดิตข้อมูล: <b>พว.วิษณุกรณ์ โอยา (รพ.ชลบุรี)</b>
-        </div>
-
-        <h3 style="margin-top:0;color:#1e3a8a;margin-bottom:15px;">📖 คู่มือ Fentanyl Patch</h3>
         
+        <h3 style="margin-top:0;color:#1e3a8a;margin-bottom:15px;">📖 คู่มือ Fentanyl Patch</h3>
+
         <h4>1) การเตรียมผิวหนังและตำแหน่ง</h4>
         <ul>
             <li><b>ตำแหน่งที่เหมาะสม:</b> หน้าอกส่วนบน, หลังส่วนบน, ชายโครงด้านข้าง, ต้นแขนด้านนอก</li>
@@ -199,7 +194,8 @@
   </div>
   
   <footer>
-    Medication Reminder WebApp • เครดิตเนื้อหา: <b>พว.วิษณุกรณ์ โอยา (รพ.ชลบุรี)</b>
+    พัฒนาโดย <b>พว.วิษณุกรณ์ โอยา (รพ.ชลบุรี)</b><br>
+   <span><a href="https://www.freecounterstat.com" title="free hit counter"><img src="https://counter1.optistats.ovh/private/freecounterstat.php?c=nkgarzzb5qbwy6cck5wpqdc4qq5ks6e4" border="0" title="free hit counter" alt="free hit counter"></a></span>
   </footer>
 </div>
 
@@ -207,8 +203,7 @@
 
 <script>
 /* --- Core Logic --- */
-const DB_KEY = 'med_reminder_data_v10_noimg';
-// --- ลบ IMG_KEY ออก ---
+const DB_KEY = 'med_reminder_data_v12_clean';
 let items = [];
 
 // Audio Context
@@ -255,8 +250,6 @@ function load(){
     try{ items = JSON.parse(localStorage.getItem(DB_KEY)) || []; }catch(e){ items=[]; }
     render();
 }
-
-/* --- ลบ Logic ส่วน Image Upload ออกทั้งหมด --- */
 
 // Time Calcs
 function getNext(start, hours){
@@ -393,7 +386,6 @@ window.testAlarm = () => { initAudio(); playAlarm(true); toast('ทดสอบ�
 
 // Init
 load();
-// --- ลบ loadImg() ออก ---
 const tzOffset = new Date().getTimezoneOffset() * 60000;
 const localISOTime = (new Date(Date.now() - tzOffset)).toISOString().slice(0,16);
 </script>
