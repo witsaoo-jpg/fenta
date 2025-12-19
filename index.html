@@ -84,21 +84,6 @@
     }
     .icon-btn:active { transform: scale(0.9); box-shadow: 0 0 15px var(--neon-blue); }
 
-    /* Special Manual Icon Button */
-    .manual-trigger {
-        width: 45px;
-        height: 45px;
-        cursor: pointer;
-        border-radius: 50%;
-        transition: transform 0.2s, box-shadow 0.2s;
-        /* Neon Glow Effect for the Icon */
-        box-shadow: 0 0 10px var(--neon-blue), inset 0 0 5px var(--neon-blue);
-    }
-    .manual-trigger:active {
-        transform: scale(0.9);
-        box-shadow: 0 0 20px var(--neon-blue);
-    }
-
     .btn {
       padding: 12px;
       border-radius: 8px;
@@ -132,6 +117,15 @@
       color: var(--neon-red);
     }
     .btn-danger:active { background: var(--neon-red); color: #fff; box-shadow: 0 0 15px var(--neon-red); }
+
+    .btn-guide {
+      background: linear-gradient(90deg, var(--neon-purple), #8a2be2);
+      color: white;
+      border: none;
+      width: 100%;
+      margin-top: 20px;
+      box-shadow: 0 0 10px var(--neon-purple);
+    }
 
     /* --- Container --- */
     .container { max-width: 600px; margin: 0 auto; padding: 20px; }
@@ -216,53 +210,62 @@
     .med-time { font-family: 'Orbitron'; font-size: 20px; color: var(--neon-blue); margin: 8px 0; }
     .status-text { font-size: 12px; color: var(--text-muted); text-transform: uppercase; float: right; }
 
-    /* --- Modal Popup (Infographic) --- */
+    /* --- Modal Popup (Guide) --- */
     .modal {
         position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-        background: rgba(0,0,0,0.9);
-        backdrop-filter: blur(5px);
+        background: rgba(0,0,0,0.8);
+        backdrop-filter: blur(8px);
         z-index: 2000;
         display: none; opacity: 0;
         transition: opacity 0.3s ease;
         align-items: center; justify-content: center;
-        padding: 10px;
+        padding: 20px;
     }
     .modal.show { display: flex; opacity: 1; }
     
-    .modal-content-img {
-        position: relative;
-        max-width: 100%;
-        max-height: 90vh;
-        overflow-y: auto;
-        text-align: center;
-    }
-    
-    .info-img {
-        width: 100%;
-        max-width: 600px; /* Limit width for easier reading */
-        height: auto;
-        border-radius: 8px;
-        box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
-        border: 2px solid var(--neon-blue);
+    .modal-content {
+        background: #1a1a24;
+        border: 1px solid var(--neon-blue);
+        box-shadow: 0 0 30px rgba(0, 243, 255, 0.15);
+        width: 100%; max-width: 500px;
+        max-height: 85vh;
+        border-radius: 20px;
+        display: flex; flex-direction: column;
+        overflow: hidden;
+        animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .close-icon-btn {
-        position: absolute;
-        top: -15px;
-        right: -15px;
-        background: var(--neon-red);
-        color: white;
-        border: none;
-        width: 35px;
-        height: 35px;
-        border-radius: 50%;
-        font-size: 20px;
-        font-weight: bold;
-        cursor: pointer;
-        z-index: 10;
-        box-shadow: 0 0 10px rgba(255,0,0,0.5);
-        display: flex; align-items: center; justify-content: center;
+    @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    .modal-header {
+        padding: 20px;
+        background: linear-gradient(90deg, rgba(0, 243, 255, 0.1), transparent);
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        display: flex; justify-content: space-between; align-items: center;
     }
+    .modal-title { font-family: 'Sarabun'; font-weight: 700; font-size: 20px; color: var(--neon-blue); }
+    .close-btn { background: none; border: none; color: white; font-size: 24px; cursor: pointer; }
+    
+    .modal-body {
+        padding: 20px;
+        overflow-y: auto;
+        color: #e2e8f0;
+        font-size: 15px;
+        line-height: 1.6;
+    }
+    
+    /* Guide Styling */
+    .guide-section { margin-bottom: 20px; }
+    .guide-head { color: var(--neon-blue); font-weight: 700; font-size: 16px; margin-bottom: 8px; }
+    .guide-list { list-style: none; padding: 0; margin: 0; }
+    .guide-list li { 
+        position: relative; padding-left: 15px; margin-bottom: 6px; color: #cbd5e1;
+    }
+    .guide-list li::before {
+        content: '•'; position: absolute; left: 0; color: var(--text-muted);
+    }
+    .text-red { color: var(--neon-red); font-weight: 700; text-shadow: 0 0 5px rgba(255, 0, 60, 0.5); }
+    .text-bold { font-weight: 700; color: white; }
 
     /* --- Footer & Counter --- */
     footer {
@@ -303,11 +306,9 @@
         <p>ระบบออนไลน์</p>
       </div>
     </div>
-    <div style="display:flex; gap:15px; align-items: center;">
+    <div style="display:flex; gap:10px;">
         <button class="icon-btn" onclick="requestNotification()" title="เปิดแจ้งเตือน">🔔</button>
-        
-        <img src="manual_icon.png" onclick="openInfographic()" class="manual-trigger" title="เปิดคู่มือ Infographic" alt="Manual">
-        
+        <button class="icon-btn" onclick="openGuide()" title="คู่มือ">📖</button>
         <button class="icon-btn" style="border-color:var(--neon-red); color:var(--neon-red);" onclick="clearAllData()" title="ล้างข้อมูล">🗑️</button>
     </div>
   </header>
@@ -375,6 +376,10 @@
       </form>
     </div>
 
+    <button class="btn btn-guide" onclick="openGuide()">
+        📖 เปิดคู่มือการใช้งาน (Manual)
+    </button>
+
     <br>
 
     <div class="section-title" style="margin-top: 20px;">
@@ -391,10 +396,52 @@
     </div>
   </footer>
 
-  <div id="infographicModal" class="modal">
-      <div class="modal-content-img">
-          <button class="close-icon-btn" onclick="closeInfographic()">×</button>
-          <img src="handbook_fenta.png" class="info-img" alt="คู่มือการใช้งาน">
+  <div id="guideModal" class="modal">
+      <div class="modal-content">
+          <div class="modal-header">
+              <div class="modal-title">📖 คู่มือ Fentanyl Patch</div>
+              <button class="close-btn" onclick="closeGuide()">×</button>
+          </div>
+          <div class="modal-body">
+              <div class="guide-section">
+                  <div class="guide-head">1) การเตรียมผิวหนังและตำแหน่ง</div>
+                  <ul class="guide-list">
+                      <li><span class="text-bold">ตำแหน่งที่เหมาะสม:</span> หน้าอกส่วนบน, หลังส่วนบน, ชายโครงด้านข้าง, ต้นแขนด้านนอก</li>
+                      <li><span class="text-bold">หลีกเลี่ยง:</span> แผล, ผื่น, ข้อพับ, ผิวมัน/ทาครีม</li>
+                      <li><span class="text-bold">ขน:</span> ใช้กรรไกรเล็มสั้น <span class="text-red">ห้ามโกน</span> (ป้องกันการระคายเคือง/ดูดซึมยาเร็วเกินไป)</li>
+                  </ul>
+              </div>
+
+              <div class="guide-section">
+                  <div class="guide-head">2) การเปิดซองและลอกแผ่น</div>
+                  <ul class="guide-list">
+                      <li>แกะซองด้วยมือเปล่า (เลี่ยงกรรไกรโดนแผ่นยา)</li>
+                      <li>ลอกฟิล์มทีละฝั่ง ห้ามจับด้านกาว</li>
+                  </ul>
+              </div>
+
+              <div class="guide-section">
+                  <div class="guide-head">3) การติดแผ่นยา</div>
+                  <ul class="guide-list">
+                      <li>แปะลงบนผิวที่เตรียมไว้</li>
+                      <li><span class="text-bold">ใช้ฝ่ามือกดแน่นๆ 20-30 วินาที</span> ให้แนบสนิท</li>
+                      <li>หลังติดเสร็จ ให้ล้างมือด้วยสบู่ทันที</li>
+                  </ul>
+              </div>
+
+              <div class="guide-section">
+                  <div class="guide-head" style="color: var(--neon-red);">4) ข้อควรระวัง (Strictly)</div>
+                  <ul class="guide-list">
+                      <li><span class="text-red">ห้ามโดนความร้อน</span> (อาบน้ำร้อน/ประคบ) เพราะยาจะดูดซึมเร็วเกินไป (Overdose)</li>
+                      <li>หากแผ่นลอก ให้ใช้เทปทางการแพทย์ติดทับ (ห้ามใช้พลาสเตอร์ธรรมดา)</li>
+                      <li><span class="text-bold">เปลี่ยนทุก 72 ชม. (3 วัน)</span> และวนตำแหน่งไม่ซ้ำเดิม</li>
+                      <li>แผ่นเก่าให้พับด้านกาวประกบกันก่อนทิ้ง</li>
+                  </ul>
+              </div>
+          </div>
+          <div style="padding: 15px; text-align: center; border-top: 1px solid rgba(255,255,255,0.1);">
+              <button class="btn btn-primary" style="width: 100%;" onclick="closeGuide()">รับทราบ</button>
+          </div>
       </div>
   </div>
 
@@ -498,15 +545,14 @@
         }
     }
 
-    /* ===== Infographic Modal Logic ===== */
-    function openInfographic() {
-        document.getElementById('infographicModal').classList.add('show');
+    /* ===== Modal & UI Logic ===== */
+    function openGuide() {
+        document.getElementById('guideModal').classList.add('show');
     }
-    function closeInfographic() {
-        document.getElementById('infographicModal').classList.remove('show');
+    function closeGuide() {
+        document.getElementById('guideModal').classList.remove('show');
     }
 
-    /* ===== Data & UI Logic ===== */
     function updateClock() {
         const now = new Date();
         document.getElementById('clock').innerText = now.toLocaleTimeString('th-TH', {hour:'2-digit', minute:'2-digit'});
