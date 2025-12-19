@@ -3,54 +3,61 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-  <title>Fentanyl Care - ระบบช่วยจำการเปลี่ยนยา</title>
+  <title>Fentanyl Care - Future Edition</title>
   
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#3b82f6">
+  <meta name="theme-color" content="#0f172a">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="apple-touch-icon" href="fenta_logo.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
   <style>
     :root {
-      --primary: #2563eb;
-      --primary-light: #dbeafe;
-      --primary-dark: #1e40af;
-      --success: #059669;
-      --success-bg: #d1fae5;
-      --danger: #dc2626;
-      --danger-bg: #fee2e2;
-      --warning: #d97706;
-      --warning-bg: #fef3c7;
-      --text-main: #1f2937;
-      --text-muted: #6b7280;
-      --bg-body: #f3f4f6;
-      --card-bg: #ffffff;
+      --bg-dark: #050505;
+      --card-bg: rgba(20, 20, 30, 0.7);
+      --neon-blue: #00f3ff;
+      --neon-purple: #bc13fe;
+      --neon-red: #ff003c;
+      --neon-green: #0aff68;
+      --text-main: #ffffff;
+      --text-muted: #94a3b8;
+      --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+      --glow: 0 0 10px rgba(0, 243, 255, 0.3);
       --radius: 16px;
-      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
     }
     
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     
     body {
       font-family: 'Sarabun', sans-serif;
-      background-color: var(--bg-body);
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(188, 19, 254, 0.15) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(0, 243, 255, 0.1) 0%, transparent 20%);
       color: var(--text-main);
       margin: 0;
       padding: 0;
       line-height: 1.5;
-      padding-bottom: 80px; /* Space for footer */
+      padding-bottom: 100px;
+      min-height: 100vh;
+    }
+
+    /* --- Typography --- */
+    h1, h2, h3, .brand-text h1, .stat-value, .clock {
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 1px;
     }
 
     /* --- Header --- */
     header {
-      background: var(--card-bg);
+      background: rgba(5, 5, 5, 0.8);
+      backdrop-filter: blur(10px);
       padding: 15px 20px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      border-bottom: var(--glass-border);
       position: sticky;
       top: 0;
       z-index: 100;
@@ -59,63 +66,73 @@
       align-items: center;
     }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand img { height: 40px; width: auto; border-radius: 6px; box-shadow: var(--glow); }
+    .brand-text h1 { font-size: 16px; margin: 0; color: var(--neon-blue); text-shadow: 0 0 5px var(--neon-blue); }
+    .brand-text p { font-size: 10px; margin: 0; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
 
-    .brand img {
-      height: 45px;
-      width: auto;
-      border-radius: 8px;
-    }
-
-    .brand-text h1 {
-      font-size: 18px;
-      font-weight: 700;
-      margin: 0;
-      color: var(--primary);
-    }
-
-    .brand-text p {
-      font-size: 12px;
-      margin: 0;
-      color: var(--text-muted);
-    }
-
-    /* --- Action Bar (Top) --- */
-    .action-bar {
-      display: flex;
-      gap: 10px;
-    }
-
+    /* --- Buttons --- */
     .icon-btn {
-      background: var(--primary-light);
-      color: var(--primary);
-      border: none;
-      width: 40px;
-      height: 40px;
+      background: rgba(255,255,255,0.05);
+      color: var(--neon-blue);
+      border: 1px solid var(--neon-blue);
+      width: 40px; height: 40px;
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; cursor: pointer;
+      box-shadow: 0 0 5px var(--neon-blue);
       transition: 0.2s;
     }
+    .icon-btn:active { transform: scale(0.9); box-shadow: 0 0 15px var(--neon-blue); }
 
-    .icon-btn:active { transform: scale(0.95); }
-
-    /* --- Container --- */
-    .container {
-      max-width: 600px; /* Mobile focused max-width */
-      margin: 0 auto;
-      padding: 20px;
+    .btn {
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      font-family: 'Sarabun', sans-serif;
+      font-weight: 600; font-size: 14px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn-primary { 
+      background: transparent;
+      border: 1px solid var(--neon-blue);
+      color: var(--neon-blue);
+      box-shadow: 0 0 8px rgba(0, 243, 255, 0.2);
+    }
+    .btn-primary:hover, .btn-primary:active {
+      background: var(--neon-blue);
+      color: #000;
+      box-shadow: 0 0 20px var(--neon-blue);
     }
 
-    /* --- Dashboard Cards --- */
-    .stats-grid {
+    .btn-danger { 
+      background: transparent;
+      border: 1px solid var(--neon-red);
+      color: var(--neon-red);
+    }
+    .btn-danger:active { background: var(--neon-red); color: #fff; box-shadow: 0 0 15px var(--neon-red); }
+
+    .btn-guide {
+      background: linear-gradient(90deg, var(--neon-purple), #8a2be2);
+      color: white;
+      border: none;
+      width: 100%;
+      margin-top: 20px;
+      box-shadow: 0 0 10px var(--neon-purple);
+    }
+
+    /* --- Container --- */
+    .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+
+    /* --- Stats & Audio Controls --- */
+    .dashboard-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
@@ -124,219 +141,145 @@
 
     .stat-card {
       background: var(--card-bg);
+      border: var(--glass-border);
       padding: 15px;
       border-radius: var(--radius);
-      box-shadow: var(--shadow);
       text-align: center;
-    }
-
-    .stat-value {
-      font-size: 24px;
-      font-weight: 700;
-      color: var(--primary);
-    }
-
-    .stat-label {
-      font-size: 13px;
-      color: var(--text-muted);
-    }
-
-    /* --- Medication List (Cards instead of Table) --- */
-    .section-title {
-      font-size: 18px;
-      font-weight: 600;
-      margin-bottom: 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .med-card {
-      background: var(--card-bg);
-      border-radius: var(--radius);
-      padding: 16px;
-      margin-bottom: 16px;
-      box-shadow: var(--shadow);
-      border-left: 5px solid var(--text-muted);
       position: relative;
       overflow: hidden;
     }
-
-    .med-card.active { border-left-color: var(--success); }
-    .med-card.overdue { border-left-color: var(--danger); }
-    .med-card.warning { border-left-color: var(--warning); }
-
-    .med-header {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 8px;
+    .stat-card::before {
+      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
     }
 
-    .med-name {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--text-main);
-    }
+    .stat-value { font-size: 28px; font-weight: 700; color: var(--text-main); text-shadow: 0 0 10px rgba(255,255,255,0.3); }
+    .stat-label { font-size: 11px; color: var(--text-muted); margin-top: 5px; text-transform: uppercase; }
 
-    .med-badge {
-      font-size: 11px;
-      padding: 2px 8px;
-      border-radius: 20px;
-      background: #eee;
-      color: #666;
-    }
-
-    .med-time {
-      font-size: 20px;
-      font-weight: 600;
-      color: var(--primary-dark);
-      margin: 8px 0;
-    }
-
-    .med-detail {
-      font-size: 13px;
-      color: var(--text-muted);
-      display: flex;
+    .audio-controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 10px;
-      align-items: center;
+      margin-bottom: 20px;
     }
 
-    .med-actions {
-      margin-top: 15px;
-      padding-top: 15px;
-      border-top: 1px solid #eee;
-      display: flex;
-      gap: 10px;
-    }
-
-    .btn {
-      flex: 1;
-      padding: 10px;
-      border-radius: 8px;
-      border: none;
-      font-family: 'Sarabun', sans-serif;
-      font-weight: 600;
-      font-size: 14px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-    }
-
-    .btn-primary { background: var(--primary); color: white; }
-    .btn-outline { background: transparent; border: 1px solid #ddd; color: var(--text-muted); }
-    .btn-danger { background: var(--danger-bg); color: var(--danger); }
-    
-    /* --- Form Section --- */
+    /* --- Form --- */
     .form-card {
       background: var(--card-bg);
+      border: var(--glass-border);
       border-radius: var(--radius);
       padding: 20px;
-      box-shadow: var(--shadow);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .section-title {
+      font-size: 14px; color: var(--neon-blue);
+      text-transform: uppercase; letter-spacing: 1px;
+      margin-bottom: 15px; display: flex; justify-content: space-between;
     }
 
     .input-group { margin-bottom: 16px; }
+    .input-label { display: block; margin-bottom: 8px; font-size: 13px; color: var(--text-muted); }
     
-    .input-label {
-      display: block;
-      margin-bottom: 6px;
-      font-weight: 500;
-      font-size: 14px;
-    }
-
     .form-control {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #e5e7eb;
-      border-radius: 10px;
-      font-family: 'Sarabun';
-      font-size: 16px; /* Prevent iOS zoom */
-      background: #f9fafb;
+      width: 100%; padding: 12px;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid #333;
+      border-radius: 8px;
+      color: white; font-family: 'Sarabun'; font-size: 16px;
+      transition: 0.3s;
     }
-
     .form-control:focus {
-      outline: none;
-      border-color: var(--primary);
-      background: white;
+      outline: none; border-color: var(--neon-blue);
+      box-shadow: 0 0 10px rgba(0, 243, 255, 0.1);
     }
+    select.form-control { -webkit-appearance: none; }
 
-    /* --- Collapsible Guide --- */
-    details.guide-details {
-      background: white;
+    /* --- List --- */
+    .med-card {
+      background: var(--card-bg);
+      border: var(--glass-border);
       border-radius: var(--radius);
-      padding: 10px 15px;
-      margin-top: 20px;
-      box-shadow: var(--shadow);
+      padding: 16px; margin-bottom: 16px;
+      border-left: 3px solid var(--text-muted);
+      transition: 0.3s;
     }
+    .med-card.active { border-left-color: var(--neon-green); box-shadow: 0 0 15px rgba(10, 255, 104, 0.05); }
+    .med-card.overdue { border-left-color: var(--neon-red); box-shadow: 0 0 15px rgba(255, 0, 60, 0.1); border-color: rgba(255,0,60,0.3); }
     
-    summary {
-      font-weight: 600;
-      cursor: pointer;
-      color: var(--primary);
-      padding: 5px 0;
+    .med-name { font-size: 18px; font-weight: 600; color: white; }
+    .med-time { font-family: 'Orbitron'; font-size: 20px; color: var(--neon-blue); margin: 8px 0; }
+    .status-text { font-size: 12px; color: var(--text-muted); text-transform: uppercase; float: right; }
+
+    /* --- Modal Popup (Guide) --- */
+    .modal {
+        position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.8);
+        backdrop-filter: blur(8px);
+        z-index: 2000;
+        display: none; opacity: 0;
+        transition: opacity 0.3s ease;
+        align-items: center; justify-content: center;
+        padding: 20px;
+    }
+    .modal.show { display: flex; opacity: 1; }
+    
+    .modal-content {
+        background: #1a1a24;
+        border: 1px solid var(--neon-blue);
+        box-shadow: 0 0 30px rgba(0, 243, 255, 0.15);
+        width: 100%; max-width: 500px;
+        max-height: 85vh;
+        border-radius: 20px;
+        display: flex; flex-direction: column;
+        overflow: hidden;
+        animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .guide-content ul {
-      padding-left: 20px;
-      font-size: 14px;
-      color: #4b5563;
+    @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    .modal-header {
+        padding: 20px;
+        background: linear-gradient(90deg, rgba(0, 243, 255, 0.1), transparent);
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        display: flex; justify-content: space-between; align-items: center;
+    }
+    .modal-title { font-family: 'Sarabun'; font-weight: 700; font-size: 20px; color: var(--neon-blue); }
+    .close-btn { background: none; border: none; color: white; font-size: 24px; cursor: pointer; }
+    
+    .modal-body {
+        padding: 20px;
+        overflow-y: auto;
+        color: #e2e8f0;
+        font-size: 15px;
+        line-height: 1.6;
     }
     
-    .guide-content li { margin-bottom: 6px; }
+    /* Guide Styling from Image */
+    .guide-section { margin-bottom: 20px; }
+    .guide-head { color: var(--neon-blue); font-weight: 700; font-size: 16px; margin-bottom: 8px; }
+    .guide-list { list-style: none; padding: 0; margin: 0; }
+    .guide-list li { 
+        position: relative; padding-left: 15px; margin-bottom: 6px; color: #cbd5e1;
+    }
+    .guide-list li::before {
+        content: '•'; position: absolute; left: 0; color: var(--text-muted);
+    }
+    .text-red { color: var(--neon-red); font-weight: 700; text-shadow: 0 0 5px rgba(255, 0, 60, 0.5); }
+    .text-bold { font-weight: 700; color: white; }
 
     /* --- Toast --- */
     .toast {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      right: 20px;
-      background: #333;
-      color: white;
-      padding: 14px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-      transform: translateY(150%);
-      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      z-index: 2000;
+      position: fixed; bottom: 20px; left: 20px; right: 20px;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid var(--neon-blue);
+      color: white; padding: 15px; border-radius: 12px;
+      display: flex; align-items: center; gap: 12px;
+      transform: translateY(150%); transition: 0.3s; z-index: 3000;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     }
-    
     .toast.show { transform: translateY(0); }
-    .toast-success { background: var(--success); }
-    .toast-warning { background: var(--warning); color: #fff; }
-    .toast-error { background: var(--danger); }
-
-    /* --- Empty State --- */
-    .empty-state {
-      text-align: center;
-      padding: 40px 20px;
-      color: var(--text-muted);
-    }
-
-    /* --- Modal --- */
-    .modal {
-        position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-        background: rgba(0,0,0,0.6);
-        z-index: 3000;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-    }
-    .modal.show { display: flex; }
-    .modal-content {
-        background: white;
-        width: 100%;
-        max-width: 400px;
-        padding: 24px;
-        border-radius: 20px;
-        text-align: center;
-    }
-    .modal-title { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
-    .modal-actions { margin-top: 20px; display: flex; gap: 10px; }
+    .toast-warning { border-color: var(--neon-red); box-shadow: 0 0 10px rgba(255, 0, 60, 0.3); }
 
   </style>
 </head>
@@ -346,172 +289,248 @@
     <div class="brand">
       <img src="fenta_logo.png" alt="Logo" onerror="this.style.display='none'">
       <div class="brand-text">
-        <h1>Fenta Care</h1>
-        <p>ผู้ช่วยจำเปลี่ยนแผ่นยา</p>
+        <h1>FENTA LINK</h1>
+        <p>System Online</p>
       </div>
     </div>
-    <div class="action-bar">
-        <button class="icon-btn" onclick="requestNotification()" title="เปิดแจ้งเตือน">🔔</button>
-        <button class="icon-btn" style="background: #fee2e2; color: #dc2626;" onclick="openClearModal()" title="ล้างข้อมูล">🗑️</button>
+    <div style="display:flex; gap:10px;">
+        <button class="icon-btn" onclick="openGuide()" title="คู่มือ">📖</button>
+        <button class="icon-btn" style="border-color:var(--neon-red); color:var(--neon-red);" onclick="clearAllData()">🗑️</button>
     </div>
   </header>
 
   <div class="container">
     
-    <div class="stats-grid">
+    <div class="audio-controls">
+        <button class="btn btn-primary" onclick="testAlarm()">
+            🔊 Test Sound
+        </button>
+        <button class="btn btn-danger" onclick="stopAlarm()">
+            🔇 Stop Sound
+        </button>
+    </div>
+
+    <div class="dashboard-row">
       <div class="stat-card">
         <div class="stat-value" id="activeCount">0</div>
-        <div class="stat-label">กำลังใช้งาน</div>
+        <div class="stat-label">Active Units</div>
       </div>
       <div class="stat-card">
-        <div class="stat-value" id="dueSoonCount" style="color: var(--warning);">0</div>
-        <div class="stat-label">ใกล้ครบกำหนด</div>
+        <div class="stat-value" id="dueSoonCount" style="color: var(--neon-red);">0</div>
+        <div class="stat-label">Critical / Due</div>
       </div>
     </div>
 
     <div class="form-card">
       <div class="section-title">
-        <span>📝 บันทึกยาใหม่</span>
-        <span id="clock" style="font-size: 12px; color: var(--text-muted); font-weight: normal;">--:--</span>
+        <span>New Entry</span>
+        <span class="clock" id="clock">00:00</span>
       </div>
       
       <form id="medForm">
         <input type="hidden" id="medId">
         
         <div class="input-group">
-            <label class="input-label">ชื่อยา</label>
+            <label class="input-label">MEDICATION ID</label>
             <input type="text" id="medName" class="form-control" value="Fentanyl Patch" required>
         </div>
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
             <div class="input-group">
-                <label class="input-label">ความถี่</label>
+                <label class="input-label">INTERVAL</label>
                 <select id="interval" class="form-control">
-                    <option value="72" selected>3 วัน (72 ชม.)</option>
-                    <option value="48">2 วัน (48 ชม.)</option>
-                    <option value="24">1 วัน (24 ชม.)</option>
+                    <option value="72" selected>72 HRS (3 Days)</option>
+                    <option value="48">48 HRS (2 Days)</option>
+                    <option value="24">24 HRS (1 Day)</option>
                 </select>
             </div>
             <div class="input-group">
-                <label class="input-label">จำนวน (แผ่น)</label>
+                <label class="input-label">QUANTITY</label>
                 <input type="number" id="qty" class="form-control" value="1" min="1">
             </div>
         </div>
 
         <div class="input-group">
-            <label class="input-label">เริ่มแปะเมื่อ</label>
+            <label class="input-label">START TIME</label>
             <input type="datetime-local" id="startAt" class="form-control">
         </div>
 
-        <div style="display: flex; gap: 10px;">
-            <button type="submit" class="btn btn-primary" id="submitBtn">บันทึก</button>
-            <button type="button" class="btn btn-outline" onclick="resetForm()" id="cancelBtn" style="flex: 0 0 auto;">ล้าง</button>
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+            <button type="submit" class="btn btn-primary" style="flex:1;" id="submitBtn">INITIATE</button>
+            <button type="button" class="btn btn-danger" style="flex:0.4;" onclick="resetForm()" id="cancelBtn">RESET</button>
         </div>
       </form>
     </div>
 
+    <button class="btn btn-guide" onclick="openGuide()">
+        📖 เปิดคู่มือการใช้งาน (Manual)
+    </button>
+
     <br>
 
-    <div class="section-title">
-      <span>💊 รายการที่ต้องติดตาม</span>
+    <div class="section-title" style="margin-top: 20px;">
+      <span>Monitoring List</span>
     </div>
-    <div id="listWrap">
-        </div>
+    <div id="listWrap"></div>
 
-    <details class="guide-details">
-        <summary>📖 วิธีใช้ Fentanyl Patch (คลิกเพื่ออ่าน)</summary>
-        <div class="guide-content">
-            <br>
-            <div style="background: #eff6ff; padding: 10px; border-radius: 8px; margin-bottom: 10px;">
-                <strong style="color: var(--primary);">⚠️ ข้อควรระวังสำคัญ</strong>
-                <ul style="margin-top: 5px; margin-bottom: 0;">
-                    <li>เปลี่ยนแผ่นยาทุก 3 วัน (72 ชม.)</li>
-                    <li>ห้ามโดนความร้อนจัด (เช่น กระเป๋าน้ำร้อน)</li>
-                    <li>ห้ามโกนขน (ให้ใช้กรรไกรเล็ม)</li>
-                </ul>
-            </div>
-            <strong>ขั้นตอนการติด:</strong>
-            <ul>
-                <li>เตรียมผิวหนังบริเวณหน้าอก หรือต้นแขน</li>
-                <li>ทำความสะอาดด้วยน้ำเปล่า (ห้ามใช้สบู่/โลชั่น)</li>
-                <li>แกะแผ่นยา ห้ามสัมผัสแถบกาว</li>
-                <li>แปะและกดด้วยฝ่ามือไว้นาน 30 วินาที</li>
-                <li>ล้างมือให้สะอาดทันที</li>
-            </ul>
-        </div>
-    </details>
-    
-    <div style="text-align: center; margin-top: 30px; font-size: 12px; color: #999;">
-        พัฒนาโดย พว.วิษณุกรณ์ โอยา (รพ.ชลบุรี)
-    </div>
-
-  </div> <div id="toast" class="toast">
-    <span id="toastIcon">📢</span>
-    <span id="toastMessage">ข้อความ</span>
-  </div>
-
-  <div id="clearModal" class="modal">
+  </div> <div id="guideModal" class="modal">
       <div class="modal-content">
-          <div class="modal-title">ยืนยันล้างข้อมูล?</div>
-          <p>ข้อมูลยาทั้งหมดจะหายไป ไม่สามารถกู้คืนได้</p>
-          <div class="modal-actions">
-              <button class="btn btn-outline" onclick="closeClearModal()">ยกเลิก</button>
-              <button class="btn btn-danger" onclick="clearAll()">ลบทันที</button>
+          <div class="modal-header">
+              <div class="modal-title">📖 คู่มือ Fentanyl Patch</div>
+              <button class="close-btn" onclick="closeGuide()">×</button>
+          </div>
+          <div class="modal-body">
+              <div class="guide-section">
+                  <div class="guide-head">1) การเตรียมผิวหนังและตำแหน่ง</div>
+                  <ul class="guide-list">
+                      <li><span class="text-bold">ตำแหน่งที่เหมาะสม:</span> หน้าอกส่วนบน, หลังส่วนบน, ชายโครงด้านข้าง, ต้นแขนด้านนอก</li>
+                      <li><span class="text-bold">หลีกเลี่ยง:</span> แผล, ผื่น, ข้อพับ, ผิวมัน/ทาครีม</li>
+                      <li><span class="text-bold">ขน:</span> ใช้กรรไกรเล็มสั้น <span class="text-red">ห้ามโกน</span> (ป้องกันการระคายเคือง/ดูดซึมยาเร็วเกินไป)</li>
+                  </ul>
+              </div>
+
+              <div class="guide-section">
+                  <div class="guide-head">2) การเปิดซองและลอกแผ่น</div>
+                  <ul class="guide-list">
+                      <li>แกะซองด้วยมือเปล่า (เลี่ยงกรรไกรโดนแผ่นยา)</li>
+                      <li>ลอกฟิล์มทีละฝั่ง ห้ามจับด้านกาว</li>
+                  </ul>
+              </div>
+
+              <div class="guide-section">
+                  <div class="guide-head">3) การติดแผ่นยา</div>
+                  <ul class="guide-list">
+                      <li>แปะลงบนผิวที่เตรียมไว้</li>
+                      <li><span class="text-bold">ใช้ฝ่ามือกดแน่นๆ 20-30 วินาที</span> ให้แนบสนิท</li>
+                      <li>หลังติดเสร็จ ให้ล้างมือด้วยสบู่ทันที</li>
+                  </ul>
+              </div>
+
+              <div class="guide-section">
+                  <div class="guide-head" style="color: var(--neon-red);">4) ข้อควรระวัง (Strictly)</div>
+                  <ul class="guide-list">
+                      <li><span class="text-red">ห้ามโดนความร้อน</span> (อาบน้ำร้อน/ประคบ) เพราะยาจะดูดซึมเร็วเกินไป (Overdose)</li>
+                      <li>หากแผ่นลอก ให้ใช้เทปทางการแพทย์ติดทับ (ห้ามใช้พลาสเตอร์ธรรมดา)</li>
+                      <li><span class="text-bold">เปลี่ยนทุก 72 ชม. (3 วัน)</span> และวนตำแหน่งไม่ซ้ำเดิม</li>
+                      <li>แผ่นเก่าให้พับด้านกาวประกบกันก่อนทิ้ง</li>
+                  </ul>
+              </div>
+          </div>
+          <div style="padding: 15px; text-align: center; border-top: 1px solid rgba(255,255,255,0.1);">
+              <button class="btn btn-primary" style="width: 100%;" onclick="closeGuide()">รับทราบ (ACKNOWLEDGE)</button>
           </div>
       </div>
   </div>
 
+  <div id="toast" class="toast">
+    <span id="toastIcon" style="font-size: 24px;">📢</span>
+    <span id="toastMessage">Message</span>
+  </div>
+
   <script>
-    /* ===== PWA Service Worker Registration ===== */
+    /* ===== PWA Registration ===== */
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-            navigator.serviceWorker.register('./sw.js')
-                .then(reg => console.log('SW Registered'))
-                .catch(err => console.log('SW Failed', err));
+            navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW Fail'));
         });
     }
 
-    /* ===== Core Logic (Same Logic, New UI) ===== */
-    const DB_KEY = 'fenta_care_v1';
+    /* ===== Core Variables ===== */
+    const DB_KEY = 'fenta_future_v2';
     let items = [];
     let audioCtx = null;
+    let oscillator = null;
+    let gainNode = null;
+    let alarmTimeout = null;
     let editingId = null;
 
-    // Elements
-    const medForm = document.getElementById('medForm');
-    const startAtInput = document.getElementById('startAt');
-    const listWrap = document.getElementById('listWrap');
-    const toast = document.getElementById('toast');
-    const submitBtn = document.getElementById('submitBtn');
-    
-    // Helpers
-    const uid = () => Date.now().toString(36) + Math.random().toString(36).substr(2);
-    const nowISO = () => new Date().toISOString();
-    
-    // Initial Setup
+    /* ===== Initialization ===== */
     window.addEventListener('DOMContentLoaded', () => {
-        // Set default time to now
         const now = new Date();
-        const localDateTime = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
-        startAtInput.value = localDateTime;
+        // Shift time for local input
+        const localISO = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+        document.getElementById('startAt').value = localISO;
         
         loadData();
         updateClock();
         setInterval(updateClock, 1000);
-        setInterval(checkDueMedications, 30000); // Check every 30s
+        setInterval(checkDueMedications, 10000); // Check every 10s
     });
 
-    // Clock
-    function updateClock() {
-        const now = new Date();
-        document.getElementById('clock').textContent = now.toLocaleTimeString('th-TH', {hour: '2-digit', minute:'2-digit'});
+    /* ===== Audio Logic (10 Seconds Limit) ===== */
+    function initAudio() {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
     }
 
-    // CRUD
+    function playAlarm() {
+        initAudio();
+        stopAlarm(); // Clear existing
+
+        oscillator = audioCtx.createOscillator();
+        gainNode = audioCtx.createGain();
+
+        // High-tech Alarm Sound (Square wave)
+        oscillator.type = 'square';
+        oscillator.frequency.setValueAtTime(880, audioCtx.currentTime);
+        oscillator.frequency.setValueAtTime(440, audioCtx.currentTime + 0.2);
+        oscillator.frequency.setValueAtTime(880, audioCtx.currentTime + 0.4);
+        oscillator.frequency.setValueAtTime(440, audioCtx.currentTime + 0.6);
+
+        // Loop functionality manually for complexity or simple interval
+        // Let's make it a simple repeating beep for 10s
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        
+        oscillator.start();
+
+        // Pulping effect
+        const now = audioCtx.currentTime;
+        for(let i=0; i<20; i++) { // Beep for 10 seconds (approx)
+            gainNode.gain.setValueAtTime(0.2, now + i*0.5);
+            gainNode.gain.setValueAtTime(0, now + i*0.5 + 0.3);
+        }
+
+        // Auto stop after 10 seconds
+        alarmTimeout = setTimeout(() => {
+            stopAlarm();
+        }, 10000);
+    }
+
+    function stopAlarm() {
+        if (oscillator) {
+            try { oscillator.stop(); } catch(e){}
+            oscillator.disconnect();
+            oscillator = null;
+        }
+        if (alarmTimeout) {
+            clearTimeout(alarmTimeout);
+            alarmTimeout = null;
+        }
+    }
+
+    function testAlarm() {
+        playAlarm();
+        showToast('🔊 Testing Alarm (10s)', 'info');
+    }
+
+    /* ===== Modal Logic ===== */
+    function openGuide() {
+        const m = document.getElementById('guideModal');
+        m.classList.add('show');
+    }
+    function closeGuide() {
+        document.getElementById('guideModal').classList.remove('show');
+    }
+
+    /* ===== Data & UI Logic ===== */
+    function updateClock() {
+        const now = new Date();
+        document.getElementById('clock').innerText = now.toLocaleTimeString('th-TH', {hour:'2-digit', minute:'2-digit'});
+    }
+
     function loadData() {
-        try {
-            items = JSON.parse(localStorage.getItem(DB_KEY) || '[]');
-        } catch { items = []; }
+        try { items = JSON.parse(localStorage.getItem(DB_KEY) || '[]'); } catch { items = []; }
         render();
     }
 
@@ -520,121 +539,13 @@
         render();
     }
 
-    medForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const name = document.getElementById('medName').value;
-        const hours = parseInt(document.getElementById('interval').value);
-        const qty = parseInt(document.getElementById('qty').value);
-        const start = new Date(startAtInput.value);
-        
-        if(isNaN(start.getTime())) {
-            showToast('กรุณาระบุเวลา', 'error');
-            return;
-        }
-
-        const startISO = start.toISOString();
-        
-        const newItem = {
-            id: editingId || uid(),
-            name, hours, qty,
-            start: startISO,
-            nextAt: getNextDoseTime(startISO, hours),
-            active: true
-        };
-
-        if(editingId) {
-            const idx = items.findIndex(i => i.id === editingId);
-            if(idx !== -1) items[idx] = newItem;
-            showToast('แก้ไขข้อมูลแล้ว', 'success');
-        } else {
-            items.push(newItem);
-            showToast('บันทึกสำเร็จ', 'success');
-        }
-
-        saveData();
-        resetForm();
-    });
-
     function getNextDoseTime(startISO, hours) {
         const start = new Date(startISO);
         const intervalMs = hours * 3600000;
         let next = new Date(start.getTime() + intervalMs);
         const now = new Date();
-        
-        // Find next future dose
-        while(next < now) {
-            next = new Date(next.getTime() + intervalMs);
-        }
+        while(next < now) next = new Date(next.getTime() + intervalMs);
         return next.toISOString();
-    }
-
-    // Render Logic (Cards)
-    function render() {
-        if(items.length === 0) {
-            listWrap.innerHTML = `
-                <div class="empty-state">
-                    <div style="font-size: 40px; margin-bottom: 10px;">📋</div>
-                    <p>ยังไม่มีรายการยา<br>กรอกข้อมูลด้านบนเพื่อบันทึก</p>
-                </div>`;
-            updateStats();
-            return;
-        }
-
-        items.sort((a, b) => new Date(a.nextAt) - new Date(b.nextAt));
-        
-        let html = '';
-        items.forEach(item => {
-            const timeData = getTimeRemaining(item.nextAt);
-            const dateObj = new Date(item.nextAt);
-            const dateStr = dateObj.toLocaleDateString('th-TH', { day: 'numeric', month: 'short' });
-            const timeStr = dateObj.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
-            
-            let statusClass = 'active';
-            let statusText = 'กำลังทำงาน';
-            
-            if(!item.active) {
-                statusClass = ''; 
-                statusText = 'ปิดใช้งาน';
-            } else if(timeData.overdue) {
-                statusClass = 'overdue';
-                statusText = 'เลยกำหนด!';
-            } else if(timeData.hours < 24) {
-                statusClass = 'warning';
-            }
-
-            html += `
-            <div class="med-card ${item.active ? statusClass : ''}" style="${!item.active ? 'opacity: 0.6;' : ''}">
-                <div class="med-header">
-                    <span class="med-name">${item.name} <span class="med-badge">x${item.qty}</span></span>
-                    <span style="font-size: 12px; color: var(--text-muted);">${statusText}</span>
-                </div>
-                
-                <div class="med-time">
-                    ${timeData.overdue ? '❗' : '⏰'} ${dateStr} เวลา ${timeStr}
-                </div>
-                <div style="color: ${timeData.overdue ? 'var(--danger)' : 'var(--primary)'}; font-weight: 500; font-size: 14px; margin-bottom: 10px;">
-                    ${timeData.text}
-                </div>
-
-                <div class="med-detail">
-                    <span>⏳ เปลี่ยนทุก ${item.hours} ชม.</span>
-                </div>
-
-                <div class="med-actions">
-                    <button class="btn ${item.active ? 'btn-danger' : 'btn-primary'}" 
-                        style="background: ${item.active ? '#fee2e2' : '#d1fae5'}; color: ${item.active ? '#dc2626' : '#059669'};"
-                        onclick="toggleItem('${item.id}')">
-                        ${item.active ? '⏹️ หยุด' : '▶️ เริ่ม'}
-                    </button>
-                    <button class="btn btn-outline" onclick="editItem('${item.id}')">✏️ แก้ไข</button>
-                    <button class="btn btn-outline" onclick="deleteItem('${item.id}')">🗑️ ลบ</button>
-                </div>
-            </div>
-            `;
-        });
-        
-        listWrap.innerHTML = html;
-        updateStats();
     }
 
     function getTimeRemaining(nextTime) {
@@ -642,128 +553,136 @@
         const hours = Math.floor(diff / 3600000);
         const mins = Math.floor((diff % 3600000) / 60000);
         
-        if (diff <= 0) return { overdue: true, text: 'เลยกำหนดเปลี่ยนยาแล้ว!', hours: 0 };
+        if (diff <= 0) return { overdue: true, text: 'CRITICAL OVERDUE', hours: 0 };
         
         let text = '';
-        if (hours >= 24) text = `อีก ${Math.floor(hours/24)} วัน ${hours%24} ชม.`;
-        else if (hours > 0) text = `อีก ${hours} ชม. ${mins} นาที`;
-        else text = `อีก ${mins} นาที`;
+        if (hours >= 24) text = `T-Minus ${Math.floor(hours/24)}d ${hours%24}h`;
+        else text = `T-Minus ${hours}h ${mins}m`;
         
         return { overdue: false, text, hours };
     }
 
-    function updateStats() {
-        const active = items.filter(i => i.active).length;
-        const dueSoon = items.filter(i => i.active && getTimeRemaining(i.nextAt).hours < 24).length;
-        
-        document.getElementById('activeCount').innerText = active;
-        document.getElementById('dueSoonCount').innerText = dueSoon;
-    }
+    document.getElementById('medForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('medName').value;
+        const hours = parseInt(document.getElementById('interval').value);
+        const qty = parseInt(document.getElementById('qty').value);
+        const start = new Date(document.getElementById('startAt').value).toISOString();
 
-    /* ===== Actions ===== */
-    function toggleItem(id) {
-        const item = items.find(i => i.id === id);
-        if(item) {
-            item.active = !item.active;
-            saveData();
-        }
-    }
+        const newItem = {
+            id: editingId || Date.now().toString(36),
+            name, hours, qty, start,
+            nextAt: getNextDoseTime(start, hours),
+            active: true
+        };
 
-    function deleteItem(id) {
-        if(confirm('ต้องการลบรายการนี้?')) {
-            items = items.filter(i => i.id !== id);
-            saveData();
-        }
-    }
-
-    function editItem(id) {
-        const item = items.find(i => i.id === id);
-        if(!item) return;
-        
-        editingId = id;
-        document.getElementById('medName').value = item.name;
-        document.getElementById('interval').value = item.hours;
-        document.getElementById('qty').value = item.qty;
-        
-        // Convert ISO back to datetime-local format
-        const d = new Date(item.start);
-        const local = new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
-        startAtInput.value = local;
-
-        submitBtn.textContent = 'บันทึกแก้ไข';
-        document.getElementById('cancelBtn').style.display = 'inline-block';
-        
-        document.querySelector('.form-card').scrollIntoView({behavior: 'smooth'});
-    }
-
-    function resetForm() {
-        medForm.reset();
-        editingId = null;
-        submitBtn.textContent = 'บันทึก';
-        
-        const now = new Date();
-        const localDateTime = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
-        startAtInput.value = localDateTime;
-    }
-
-    /* ===== Utils (Sound/Toast/Modal) ===== */
-    function requestNotification() {
-        if(Notification.permission === 'default') {
-            Notification.requestPermission().then(p => {
-                if(p === 'granted') showToast('เปิดแจ้งเตือนแล้ว', 'success');
-            });
+        if(editingId) {
+            const idx = items.findIndex(i => i.id === editingId);
+            if(idx !== -1) items[idx] = newItem;
         } else {
-            showToast('สถานะแจ้งเตือน: ' + Notification.permission, 'info');
+            items.push(newItem);
         }
+        
+        saveData();
+        resetForm();
+        showToast('Data Saved successfully', 'success');
+    });
+
+    function render() {
+        const wrap = document.getElementById('listWrap');
+        if(items.length === 0) {
+            wrap.innerHTML = `<div style="text-align:center; padding:40px; color:var(--text-muted); border: 1px dashed var(--text-muted); border-radius:16px;">NO DATA DETECTED</div>`;
+            updateStats();
+            return;
+        }
+
+        items.sort((a,b) => new Date(a.nextAt) - new Date(b.nextAt));
+        
+        let html = '';
+        items.forEach(item => {
+            const t = getTimeRemaining(item.nextAt);
+            const dateStr = new Date(item.nextAt).toLocaleDateString('th-TH', {day:'numeric', month:'short'});
+            const timeStr = new Date(item.nextAt).toLocaleTimeString('th-TH', {hour:'2-digit', minute:'2-digit'});
+
+            html += `
+            <div class="med-card ${item.active ? (t.overdue ? 'overdue' : 'active') : ''}" style="${!item.active ? 'opacity:0.5' : ''}">
+                <div style="display:flex; justify-content:space-between;">
+                    <span class="med-name">${item.name} <small style="color:var(--text-muted); font-size:12px;">(x${item.qty})</small></span>
+                    <span class="status-text">${item.active ? 'ONLINE' : 'OFFLINE'}</span>
+                </div>
+                <div class="med-time">
+                    ${t.overdue ? '⚠️' : '⏰'} ${dateStr} at ${timeStr}
+                </div>
+                <div style="color:${t.overdue ? 'var(--neon-red)' : 'var(--neon-blue)'}; font-size:14px; font-weight:600;">
+                    ${t.text}
+                </div>
+                <div style="display:flex; gap:10px; margin-top:15px;">
+                    <button class="btn ${item.active ? 'btn-danger' : 'btn-primary'}" style="flex:1; height:36px;" onclick="toggle('${item.id}')">
+                        ${item.active ? 'STOP' : 'START'}
+                    </button>
+                    <button class="btn btn-primary" style="flex:1; height:36px;" onclick="edit('${item.id}')">EDIT</button>
+                    <button class="btn btn-danger" style="flex:0.5; height:36px;" onclick="del('${item.id}')">DEL</button>
+                </div>
+            </div>`;
+        });
+        wrap.innerHTML = html;
+        updateStats();
     }
 
-    function showToast(msg, type='info') {
+    function toggle(id) {
+        const i = items.find(x => x.id === id);
+        if(i) { i.active = !i.active; saveData(); }
+    }
+    function del(id) {
+        if(confirm('Confirm Deletion?')) { items = items.filter(x => x.id !== id); saveData(); }
+    }
+    function edit(id) {
+        const i = items.find(x => x.id === id);
+        if(!i) return;
+        editingId = id;
+        document.getElementById('medName').value = i.name;
+        document.getElementById('interval').value = i.hours;
+        document.getElementById('qty').value = i.qty;
+        const local = new Date(new Date(i.start).getTime() - new Date().getTimezoneOffset()*60000).toISOString().slice(0,16);
+        document.getElementById('startAt').value = local;
+        document.getElementById('submitBtn').innerText = 'UPDATE';
+        window.scrollTo({top:0, behavior:'smooth'});
+    }
+    function resetForm() {
+        document.getElementById('medForm').reset();
+        editingId = null;
+        document.getElementById('submitBtn').innerText = 'INITIATE';
+        const now = new Date();
+        document.getElementById('startAt').value = new Date(now.getTime() - now.getTimezoneOffset()*60000).toISOString().slice(0,16);
+    }
+    function updateStats() {
+        document.getElementById('activeCount').innerText = items.filter(i => i.active).length;
+        document.getElementById('dueSoonCount').innerText = items.filter(i => i.active && getTimeRemaining(i.nextAt).hours < 24).length;
+    }
+    function clearAllData() {
+        if(confirm('SYSTEM RESET: Delete all data?')) { items = []; saveData(); }
+    }
+    function showToast(msg, type) {
         const t = document.getElementById('toast');
-        t.className = 'toast show toast-' + type;
         document.getElementById('toastMessage').innerText = msg;
+        t.className = 'toast show ' + (type==='warning'?'toast-warning':'');
         setTimeout(() => t.classList.remove('show'), 3000);
     }
 
-    function openClearModal() { document.getElementById('clearModal').classList.add('show'); }
-    function closeClearModal() { document.getElementById('clearModal').classList.remove('show'); }
-    function clearAll() {
-        items = [];
-        saveData();
-        closeClearModal();
-        showToast('ล้างข้อมูลเรียบร้อย');
-    }
-    
-    // Check Alarm Logic (Simplified)
     function checkDueMedications() {
         const now = new Date();
-        let changed = false;
+        let trigger = false;
         items.forEach(item => {
             if(item.active && new Date(item.nextAt) <= now) {
-                // Alert
-                showToast(`ถึงเวลาเปลี่ยนยา: ${item.name}`, 'warning');
-                playBeep();
-                if(Notification.permission === 'granted') {
-                    new Notification('ถึงเวลาเปลี่ยนยา!', { body: item.name, icon: 'fenta_logo.png' });
-                }
-                
-                // Advance time
+                showToast('ALERT: Medication Due!', 'warning');
+                trigger = true;
                 item.nextAt = getNextDoseTime(item.nextAt, item.hours);
-                changed = true;
             }
         });
-        if(changed) saveData();
-    }
-
-    function playBeep() {
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.frequency.value = 800;
-        osc.start();
-        gain.gain.exponentialRampToValueAtTime(0.00001, ctx.currentTime + 0.5);
-        osc.stop(ctx.currentTime + 0.5);
+        if(trigger) {
+            playAlarm();
+            saveData();
+        }
     }
   </script>
 </body>
