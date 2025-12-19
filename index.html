@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-  <title>Fentanyl Care - Future Edition</title>
+  <title>Fentanyl Care - ระบบเตือนภัยล้ำยุค</title>
   
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0f172a">
@@ -42,7 +42,6 @@
       margin: 0;
       padding: 0;
       line-height: 1.5;
-      padding-bottom: 100px;
       min-height: 100vh;
     }
 
@@ -154,7 +153,7 @@
     }
 
     .stat-value { font-size: 28px; font-weight: 700; color: var(--text-main); text-shadow: 0 0 10px rgba(255,255,255,0.3); }
-    .stat-label { font-size: 11px; color: var(--text-muted); margin-top: 5px; text-transform: uppercase; }
+    .stat-label { font-size: 12px; color: var(--text-muted); margin-top: 5px; }
 
     .audio-controls {
       display: grid;
@@ -255,7 +254,7 @@
         line-height: 1.6;
     }
     
-    /* Guide Styling from Image */
+    /* Guide Styling */
     .guide-section { margin-bottom: 20px; }
     .guide-head { color: var(--neon-blue); font-weight: 700; font-size: 16px; margin-bottom: 8px; }
     .guide-list { list-style: none; padding: 0; margin: 0; }
@@ -267,6 +266,20 @@
     }
     .text-red { color: var(--neon-red); font-weight: 700; text-shadow: 0 0 5px rgba(255, 0, 60, 0.5); }
     .text-bold { font-weight: 700; color: white; }
+
+    /* --- Footer & Counter --- */
+    footer {
+        text-align: center;
+        padding: 40px 20px;
+        color: var(--text-muted);
+        font-size: 14px;
+        border-top: 1px solid rgba(255,255,255,0.05);
+        margin-top: 40px;
+    }
+    .dev-credit { color: var(--neon-blue); font-weight: 500; }
+    .counter { margin-top: 15px; opacity: 0.7; transition: opacity 0.3s; }
+    .counter:hover { opacity: 1; }
+    .counter img { border-radius: 4px; }
 
     /* --- Toast --- */
     .toast {
@@ -290,12 +303,13 @@
       <img src="fenta_logo.png" alt="Logo" onerror="this.style.display='none'">
       <div class="brand-text">
         <h1>FENTA LINK</h1>
-        <p>System Online</p>
+        <p>ระบบออนไลน์</p>
       </div>
     </div>
     <div style="display:flex; gap:10px;">
+        <button class="icon-btn" onclick="requestNotification()" title="เปิดแจ้งเตือน">🔔</button>
         <button class="icon-btn" onclick="openGuide()" title="คู่มือ">📖</button>
-        <button class="icon-btn" style="border-color:var(--neon-red); color:var(--neon-red);" onclick="clearAllData()">🗑️</button>
+        <button class="icon-btn" style="border-color:var(--neon-red); color:var(--neon-red);" onclick="clearAllData()" title="ล้างข้อมูล">🗑️</button>
     </div>
   </header>
 
@@ -303,27 +317,27 @@
     
     <div class="audio-controls">
         <button class="btn btn-primary" onclick="testAlarm()">
-            🔊 Test Sound
+            🔊 ทดสอบเสียง
         </button>
         <button class="btn btn-danger" onclick="stopAlarm()">
-            🔇 Stop Sound
+            🔇 ปิดเสียง
         </button>
     </div>
 
     <div class="dashboard-row">
       <div class="stat-card">
         <div class="stat-value" id="activeCount">0</div>
-        <div class="stat-label">Active Units</div>
+        <div class="stat-label">รายการที่ทำงาน</div>
       </div>
       <div class="stat-card">
         <div class="stat-value" id="dueSoonCount" style="color: var(--neon-red);">0</div>
-        <div class="stat-label">Critical / Due</div>
+        <div class="stat-label">ใกล้ครบกำหนด</div>
       </div>
     </div>
 
     <div class="form-card">
       <div class="section-title">
-        <span>New Entry</span>
+        <span>เพิ่มรายการใหม่</span>
         <span class="clock" id="clock">00:00</span>
       </div>
       
@@ -331,33 +345,33 @@
         <input type="hidden" id="medId">
         
         <div class="input-group">
-            <label class="input-label">MEDICATION ID</label>
+            <label class="input-label">ชื่อยา</label>
             <input type="text" id="medName" class="form-control" value="Fentanyl Patch" required>
         </div>
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
             <div class="input-group">
-                <label class="input-label">INTERVAL</label>
+                <label class="input-label">ความถี่</label>
                 <select id="interval" class="form-control">
-                    <option value="72" selected>72 HRS (3 Days)</option>
-                    <option value="48">48 HRS (2 Days)</option>
-                    <option value="24">24 HRS (1 Day)</option>
+                    <option value="72" selected>72 ชม. (3 วัน)</option>
+                    <option value="48">48 ชม. (2 วัน)</option>
+                    <option value="24">24 ชม. (1 วัน)</option>
                 </select>
             </div>
             <div class="input-group">
-                <label class="input-label">QUANTITY</label>
+                <label class="input-label">จำนวน (แผ่น)</label>
                 <input type="number" id="qty" class="form-control" value="1" min="1">
             </div>
         </div>
 
         <div class="input-group">
-            <label class="input-label">START TIME</label>
+            <label class="input-label">เวลาเริ่มแปะ</label>
             <input type="datetime-local" id="startAt" class="form-control">
         </div>
 
         <div style="display: flex; gap: 10px; margin-top: 20px;">
-            <button type="submit" class="btn btn-primary" style="flex:1;" id="submitBtn">INITIATE</button>
-            <button type="button" class="btn btn-danger" style="flex:0.4;" onclick="resetForm()" id="cancelBtn">RESET</button>
+            <button type="submit" class="btn btn-primary" style="flex:1;" id="submitBtn">บันทึกข้อมูล</button>
+            <button type="button" class="btn btn-danger" style="flex:0.4;" onclick="resetForm()" id="cancelBtn">ล้างค่า</button>
         </div>
       </form>
     </div>
@@ -369,11 +383,20 @@
     <br>
 
     <div class="section-title" style="margin-top: 20px;">
-      <span>Monitoring List</span>
+      <span>รายการที่เฝ้าระวัง</span>
     </div>
     <div id="listWrap"></div>
 
-  </div> <div id="guideModal" class="modal">
+  </div> <footer>
+    <p>พัฒนาโดย <b class="dev-credit">พว.วิษณุกรณ์ โอยา (รพ.ชลบุรี)</b></p>
+    <div class="counter">
+      <a href="https://www.freecounterstat.com" title="free hit counter">
+        <img src="https://counter1.optistats.ovh/private/freecounterstat.php?c=nkgarzzb5qbwy6cck5wpqdc4qq5ks6e4" border="0" title="free hit counter" alt="free hit counter">
+      </a>
+    </div>
+  </footer>
+
+  <div id="guideModal" class="modal">
       <div class="modal-content">
           <div class="modal-header">
               <div class="modal-title">📖 คู่มือ Fentanyl Patch</div>
@@ -417,7 +440,7 @@
               </div>
           </div>
           <div style="padding: 15px; text-align: center; border-top: 1px solid rgba(255,255,255,0.1);">
-              <button class="btn btn-primary" style="width: 100%;" onclick="closeGuide()">รับทราบ (ACKNOWLEDGE)</button>
+              <button class="btn btn-primary" style="width: 100%;" onclick="closeGuide()">รับทราบ</button>
           </div>
       </div>
   </div>
@@ -447,14 +470,13 @@
     /* ===== Initialization ===== */
     window.addEventListener('DOMContentLoaded', () => {
         const now = new Date();
-        // Shift time for local input
         const localISO = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
         document.getElementById('startAt').value = localISO;
         
         loadData();
         updateClock();
         setInterval(updateClock, 1000);
-        setInterval(checkDueMedications, 10000); // Check every 10s
+        setInterval(checkDueMedications, 10000); 
     });
 
     /* ===== Audio Logic (10 Seconds Limit) ===== */
@@ -465,33 +487,28 @@
 
     function playAlarm() {
         initAudio();
-        stopAlarm(); // Clear existing
+        stopAlarm();
 
         oscillator = audioCtx.createOscillator();
         gainNode = audioCtx.createGain();
 
-        // High-tech Alarm Sound (Square wave)
         oscillator.type = 'square';
         oscillator.frequency.setValueAtTime(880, audioCtx.currentTime);
         oscillator.frequency.setValueAtTime(440, audioCtx.currentTime + 0.2);
         oscillator.frequency.setValueAtTime(880, audioCtx.currentTime + 0.4);
         oscillator.frequency.setValueAtTime(440, audioCtx.currentTime + 0.6);
 
-        // Loop functionality manually for complexity or simple interval
-        // Let's make it a simple repeating beep for 10s
         oscillator.connect(gainNode);
         gainNode.connect(audioCtx.destination);
         
         oscillator.start();
 
-        // Pulping effect
         const now = audioCtx.currentTime;
-        for(let i=0; i<20; i++) { // Beep for 10 seconds (approx)
+        for(let i=0; i<20; i++) { 
             gainNode.gain.setValueAtTime(0.2, now + i*0.5);
             gainNode.gain.setValueAtTime(0, now + i*0.5 + 0.3);
         }
 
-        // Auto stop after 10 seconds
         alarmTimeout = setTimeout(() => {
             stopAlarm();
         }, 10000);
@@ -511,19 +528,31 @@
 
     function testAlarm() {
         playAlarm();
-        showToast('🔊 Testing Alarm (10s)', 'info');
+        showToast('🔊 กำลังทดสอบเสียงเตือน (10 วินาที)', 'info');
+    }
+    
+    function requestNotification() {
+        if (!("Notification" in window)) {
+            showToast('เบราว์เซอร์ไม่รองรับการแจ้งเตือน', 'warning');
+        } else if (Notification.permission === "granted") {
+            showToast('เปิดการแจ้งเตือนไว้แล้ว', 'info');
+        } else if (Notification.permission !== "denied") {
+            Notification.requestPermission().then(function (permission) {
+                if (permission === "granted") {
+                    showToast('อนุญาตการแจ้งเตือนแล้ว', 'success');
+                }
+            });
+        }
     }
 
-    /* ===== Modal Logic ===== */
+    /* ===== Modal & UI Logic ===== */
     function openGuide() {
-        const m = document.getElementById('guideModal');
-        m.classList.add('show');
+        document.getElementById('guideModal').classList.add('show');
     }
     function closeGuide() {
         document.getElementById('guideModal').classList.remove('show');
     }
 
-    /* ===== Data & UI Logic ===== */
     function updateClock() {
         const now = new Date();
         document.getElementById('clock').innerText = now.toLocaleTimeString('th-TH', {hour:'2-digit', minute:'2-digit'});
@@ -553,11 +582,11 @@
         const hours = Math.floor(diff / 3600000);
         const mins = Math.floor((diff % 3600000) / 60000);
         
-        if (diff <= 0) return { overdue: true, text: 'CRITICAL OVERDUE', hours: 0 };
+        if (diff <= 0) return { overdue: true, text: 'เกินกำหนด!', hours: 0 };
         
         let text = '';
-        if (hours >= 24) text = `T-Minus ${Math.floor(hours/24)}d ${hours%24}h`;
-        else text = `T-Minus ${hours}h ${mins}m`;
+        if (hours >= 24) text = `อีก ${Math.floor(hours/24)} วัน ${hours%24} ชม.`;
+        else text = `อีก ${hours} ชม. ${mins} นาที`;
         
         return { overdue: false, text, hours };
     }
@@ -585,13 +614,13 @@
         
         saveData();
         resetForm();
-        showToast('Data Saved successfully', 'success');
+        showToast('บันทึกข้อมูลสำเร็จ', 'success');
     });
 
     function render() {
         const wrap = document.getElementById('listWrap');
         if(items.length === 0) {
-            wrap.innerHTML = `<div style="text-align:center; padding:40px; color:var(--text-muted); border: 1px dashed var(--text-muted); border-radius:16px;">NO DATA DETECTED</div>`;
+            wrap.innerHTML = `<div style="text-align:center; padding:40px; color:var(--text-muted); border: 1px dashed var(--text-muted); border-radius:16px;">ไม่พบข้อมูลยาในระบบ</div>`;
             updateStats();
             return;
         }
@@ -608,20 +637,20 @@
             <div class="med-card ${item.active ? (t.overdue ? 'overdue' : 'active') : ''}" style="${!item.active ? 'opacity:0.5' : ''}">
                 <div style="display:flex; justify-content:space-between;">
                     <span class="med-name">${item.name} <small style="color:var(--text-muted); font-size:12px;">(x${item.qty})</small></span>
-                    <span class="status-text">${item.active ? 'ONLINE' : 'OFFLINE'}</span>
+                    <span class="status-text">${item.active ? 'ทำงาน' : 'หยุด'}</span>
                 </div>
                 <div class="med-time">
-                    ${t.overdue ? '⚠️' : '⏰'} ${dateStr} at ${timeStr}
+                    ${t.overdue ? '⚠️' : '⏰'} ${dateStr} เวลา ${timeStr}
                 </div>
                 <div style="color:${t.overdue ? 'var(--neon-red)' : 'var(--neon-blue)'}; font-size:14px; font-weight:600;">
                     ${t.text}
                 </div>
                 <div style="display:flex; gap:10px; margin-top:15px;">
                     <button class="btn ${item.active ? 'btn-danger' : 'btn-primary'}" style="flex:1; height:36px;" onclick="toggle('${item.id}')">
-                        ${item.active ? 'STOP' : 'START'}
+                        ${item.active ? 'หยุด' : 'เริ่ม'}
                     </button>
-                    <button class="btn btn-primary" style="flex:1; height:36px;" onclick="edit('${item.id}')">EDIT</button>
-                    <button class="btn btn-danger" style="flex:0.5; height:36px;" onclick="del('${item.id}')">DEL</button>
+                    <button class="btn btn-primary" style="flex:1; height:36px;" onclick="edit('${item.id}')">แก้ไข</button>
+                    <button class="btn btn-danger" style="flex:0.5; height:36px;" onclick="del('${item.id}')">ลบ</button>
                 </div>
             </div>`;
         });
@@ -634,7 +663,7 @@
         if(i) { i.active = !i.active; saveData(); }
     }
     function del(id) {
-        if(confirm('Confirm Deletion?')) { items = items.filter(x => x.id !== id); saveData(); }
+        if(confirm('ยืนยันการลบข้อมูลนี้?')) { items = items.filter(x => x.id !== id); saveData(); }
     }
     function edit(id) {
         const i = items.find(x => x.id === id);
@@ -645,13 +674,13 @@
         document.getElementById('qty').value = i.qty;
         const local = new Date(new Date(i.start).getTime() - new Date().getTimezoneOffset()*60000).toISOString().slice(0,16);
         document.getElementById('startAt').value = local;
-        document.getElementById('submitBtn').innerText = 'UPDATE';
+        document.getElementById('submitBtn').innerText = 'บันทึกการแก้ไข';
         window.scrollTo({top:0, behavior:'smooth'});
     }
     function resetForm() {
         document.getElementById('medForm').reset();
         editingId = null;
-        document.getElementById('submitBtn').innerText = 'INITIATE';
+        document.getElementById('submitBtn').innerText = 'บันทึกข้อมูล';
         const now = new Date();
         document.getElementById('startAt').value = new Date(now.getTime() - now.getTimezoneOffset()*60000).toISOString().slice(0,16);
     }
@@ -660,7 +689,7 @@
         document.getElementById('dueSoonCount').innerText = items.filter(i => i.active && getTimeRemaining(i.nextAt).hours < 24).length;
     }
     function clearAllData() {
-        if(confirm('SYSTEM RESET: Delete all data?')) { items = []; saveData(); }
+        if(confirm('รีเซ็ตระบบ: ต้องการลบข้อมูลทั้งหมดหรือไม่?')) { items = []; saveData(); }
     }
     function showToast(msg, type) {
         const t = document.getElementById('toast');
@@ -674,9 +703,17 @@
         let trigger = false;
         items.forEach(item => {
             if(item.active && new Date(item.nextAt) <= now) {
-                showToast('ALERT: Medication Due!', 'warning');
+                showToast('เตือนภัย: ถึงเวลาให้ยาแล้ว!', 'warning');
                 trigger = true;
                 item.nextAt = getNextDoseTime(item.nextAt, item.hours);
+                
+                // Show Notification
+                if (Notification.permission === "granted") {
+                    new Notification("แจ้งเตือน Fentanyl Patch", {
+                        body: `ถึงเวลาให้ยา: ${item.name}`,
+                        icon: "fenta_logo.png"
+                    });
+                }
             }
         });
         if(trigger) {
