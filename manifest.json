@@ -1,0 +1,20 @@
+{
+  "short_name": "FentaRemind",
+  "name": "Fentanyl Patch Reminder",
+  "icons": [
+    {
+      "src": "fenta_logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "fenta_logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "./index.html",
+  "display": "standalone",
+  "theme_color": "#3b82f6",
+  "background_color": "#ffffff"
+}
