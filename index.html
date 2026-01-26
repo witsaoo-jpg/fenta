@@ -569,16 +569,28 @@
     }
     
     function requestNotification() {
+        // ตรวจสอบว่าเป็น iOS หรือไม่
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        // ตรวจสอบว่าเปิดแบบ App (Standalone) หรือยัง
+        const isStandalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
+
         if (!("Notification" in window)) {
-            showToast('เบราว์เซอร์ไม่รองรับการแจ้งเตือน', 'warning');
+            alert('เครื่องนี้ไม่รองรับการแจ้งเตือนระบบ Web Push');
+        } else if (isIOS && !isStandalone) {
+            // ถ้าเป็น iPhone แต่ยังไม่ Add to Home Screen
+            alert("⚠️ สำหรับ iPhone:\n\nต้องกดปุ่มแชร์ (Share) ด้านล่าง\nแล้วเลือก 'เพิ่มไปยังหน้าจอโฮม' (Add to Home Screen)\n\nจากนั้นเข้าใช้งานผ่านไอคอนแอปบนหน้าจอ จึงจะเปิดแจ้งเตือนได้ครับ");
         } else if (Notification.permission === "granted") {
-            showToast('เปิดการแจ้งเตือนไว้แล้ว', 'info');
+            showToast('✅ เปิดการแจ้งเตือนไว้แล้ว', 'info');
         } else if (Notification.permission !== "denied") {
             Notification.requestPermission().then(function (permission) {
                 if (permission === "granted") {
-                    showToast('อนุญาตการแจ้งเตือนแล้ว', 'success');
+                    showToast('✅ อนุญาตการแจ้งเตือนแล้ว', 'success');
+                    // ทดสอบส่งแจ้งเตือนทันทีเพื่อให้มั่นใจ
+                    new Notification("Fentanyl Care", { body: "ระบบแจ้งเตือนพร้อมทำงานครับ!", icon: "fenta_logo.png" });
                 }
             });
+        } else {
+            alert('คุณปิดกั้นการแจ้งเตือนไว้ กรุณาไปที่ Setting > Safari > Notifications เพื่อเปิดอนุญาต');
         }
     }
 
