@@ -461,13 +461,12 @@
 
   <script>
     /* ===== Core Variables ===== */
-    const DB_KEY = 'fenta_future_v3_fixed';
+    const DB_KEY = 'fenta_future_v4_ios_fixed';
     let items = [];
     
     // --- Audio System Global Variables ---
     let audioCtx = null;
     let isAudioUnlocked = false;
-    let alarmInterval = null;
 
     /* ===== Initialization ===== */
     window.addEventListener('DOMContentLoaded', () => {
@@ -497,7 +496,6 @@
         source.start(0);
 
         isAudioUnlocked = true;
-        console.log("Audio System Unlocked & Ready");
         
         // ลบ Listener ออกเพื่อไม่ให้ทำงานซ้ำ
         document.removeEventListener('click', unlockAudio);
@@ -550,12 +548,9 @@
     }
 
     function stopAlarm() {
-        // การหยุดเสียงใน Web Audio API คือการปล่อยให้มันเล่นจนจบ loop หรือ suspend
-        // ในที่นี้เราปล่อยให้ beep เล่นจนจบ pattern (10 วิ) 
-        // แต่ถ้าต้องการหยุดทันที สามารถใช้ suspend ได้
         if(audioCtx && audioCtx.state === 'running') {
             audioCtx.suspend().then(() => {
-                 setTimeout(() => { if(audioCtx) audioCtx.resume(); }, 1000); // Resume back for next time
+                 setTimeout(() => { if(audioCtx) audioCtx.resume(); }, 1000);
             });
         }
     }
@@ -569,28 +564,23 @@
     }
     
     function requestNotification() {
-        // ตรวจสอบว่าเป็น iOS หรือไม่
+        // ตรวจสอบ iOS และ Standalone
         const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-        // ตรวจสอบว่าเปิดแบบ App (Standalone) หรือยัง
         const isStandalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
 
         if (!("Notification" in window)) {
-            alert('เครื่องนี้ไม่รองรับการแจ้งเตือนระบบ Web Push');
+            showToast('เครื่องนี้ไม่รองรับการแจ้งเตือน', 'warning');
         } else if (isIOS && !isStandalone) {
-            // ถ้าเป็น iPhone แต่ยังไม่ Add to Home Screen
-            alert("⚠️ สำหรับ iPhone:\n\nต้องกดปุ่มแชร์ (Share) ด้านล่าง\nแล้วเลือก 'เพิ่มไปยังหน้าจอโฮม' (Add to Home Screen)\n\nจากนั้นเข้าใช้งานผ่านไอคอนแอปบนหน้าจอ จึงจะเปิดแจ้งเตือนได้ครับ");
+             alert("⚠️ สำหรับ iPhone:\n\nต้องกดปุ่มแชร์ (Share) ด้านล่าง\nแล้วเลือก 'เพิ่มไปยังหน้าจอโฮม' (Add to Home Screen)\n\nจากนั้นเข้าใช้งานผ่านไอคอนแอปบนหน้าจอ จึงจะเปิดแจ้งเตือนได้ครับ");
         } else if (Notification.permission === "granted") {
-            showToast('✅ เปิดการแจ้งเตือนไว้แล้ว', 'info');
+            showToast('เปิดการแจ้งเตือนไว้แล้ว', 'info');
         } else if (Notification.permission !== "denied") {
             Notification.requestPermission().then(function (permission) {
                 if (permission === "granted") {
                     showToast('✅ อนุญาตการแจ้งเตือนแล้ว', 'success');
-                    // ทดสอบส่งแจ้งเตือนทันทีเพื่อให้มั่นใจ
-                    new Notification("Fentanyl Care", { body: "ระบบแจ้งเตือนพร้อมทำงานครับ!", icon: "fenta_logo.png" });
+                    new Notification("Fentanyl Care", { body: "ระบบพร้อมแจ้งเตือนครับ", icon: "fenta_logo.png" });
                 }
             });
-        } else {
-            alert('คุณปิดกั้นการแจ้งเตือนไว้ กรุณาไปที่ Setting > Safari > Notifications เพื่อเปิดอนุญาต');
         }
     }
 
@@ -621,11 +611,10 @@
         const start = new Date(startISO);
         const intervalMs = hours * 3600000;
         
-        // คำนวณเวลาครั้งถัดไป
-        // ถ้าเวลาที่คำนวณได้มันผ่านไปแล้ว (เครื่องดับไปนาน) ให้บวกเพิ่มจนกว่าจะเป็นอนาคต
         let next = new Date(start.getTime() + intervalMs);
         const now = new Date();
         
+        // ถ้าเวลาที่คำนวณได้มันผ่านไปแล้ว ให้บวกเพิ่มจนกว่าจะเป็นอนาคต (Auto-Catchup)
         while(next < now) {
              next = new Date(next.getTime() + intervalMs);
         }
@@ -664,7 +653,7 @@
         items.push(newItem);
         saveData();
         resetForm();
-        showToast('บันทึกข้อมูลสำเร็จ', 'success');
+        showToast('บันทึกข้อมูลสำเร็จ (ระบบจะนับต่ออัตโนมัติ)', 'success');
     });
 
     function render() {
