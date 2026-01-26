@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-  <title>Fentanyl Care - ระบบเตือนภัยล้ำยุค</title>
+  <title>Fentanyl Care - iOS Fixed</title>
   
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0f172a">
@@ -45,24 +45,15 @@
       min-height: 100vh;
     }
 
-    /* --- Typography --- */
-    h1, h2, h3, .brand-text h1, .stat-value, .clock {
-      font-family: 'Orbitron', sans-serif;
-      letter-spacing: 1px;
-    }
+    h1, h2, h3, .brand-text h1, .stat-value, .clock { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
 
-    /* --- Header --- */
     header {
       background: rgba(5, 5, 5, 0.8);
       backdrop-filter: blur(10px);
       padding: 15px 20px;
       border-bottom: var(--glass-border);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      position: sticky; top: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
     }
 
     .brand { display: flex; align-items: center; gap: 12px; }
@@ -70,230 +61,87 @@
     .brand-text h1 { font-size: 16px; margin: 0; color: var(--neon-blue); text-shadow: 0 0 5px var(--neon-blue); }
     .brand-text p { font-size: 10px; margin: 0; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
 
-    /* --- Buttons --- */
     .icon-btn {
-      background: rgba(255,255,255,0.05);
-      color: var(--neon-blue);
-      border: 1px solid var(--neon-blue);
-      width: 40px; height: 40px;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px; cursor: pointer;
-      box-shadow: 0 0 5px var(--neon-blue);
-      transition: 0.2s;
+      background: rgba(255,255,255,0.05); color: var(--neon-blue); border: 1px solid var(--neon-blue);
+      width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 18px; cursor: pointer; box-shadow: 0 0 5px var(--neon-blue); transition: 0.2s;
     }
     .icon-btn:active { transform: scale(0.9); box-shadow: 0 0 15px var(--neon-blue); }
 
     .btn {
-      padding: 12px;
-      border-radius: 8px;
-      border: none;
-      font-family: 'Sarabun', sans-serif;
-      font-weight: 600; font-size: 14px;
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
+      padding: 12px; border-radius: 8px; border: none; font-family: 'Sarabun', sans-serif;
+      font-weight: 600; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+      text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.3s ease; position: relative; overflow: hidden;
     }
-    
-    .btn-primary { 
-      background: transparent;
-      border: 1px solid var(--neon-blue);
-      color: var(--neon-blue);
-      box-shadow: 0 0 8px rgba(0, 243, 255, 0.2);
-    }
-    .btn-primary:hover, .btn-primary:active {
-      background: var(--neon-blue);
-      color: #000;
-      box-shadow: 0 0 20px var(--neon-blue);
-    }
-
-    .btn-danger { 
-      background: transparent;
-      border: 1px solid var(--neon-red);
-      color: var(--neon-red);
-    }
+    .btn-primary { background: transparent; border: 1px solid var(--neon-blue); color: var(--neon-blue); box-shadow: 0 0 8px rgba(0, 243, 255, 0.2); }
+    .btn-primary:hover, .btn-primary:active { background: var(--neon-blue); color: #000; box-shadow: 0 0 20px var(--neon-blue); }
+    .btn-danger { background: transparent; border: 1px solid var(--neon-red); color: var(--neon-red); }
     .btn-danger:active { background: var(--neon-red); color: #fff; box-shadow: 0 0 15px var(--neon-red); }
+    .btn-guide { background: linear-gradient(90deg, var(--neon-purple), #8a2be2); color: white; border: none; width: 100%; margin-top: 20px; box-shadow: 0 0 10px var(--neon-purple); }
 
-    .btn-guide {
-      background: linear-gradient(90deg, var(--neon-purple), #8a2be2);
-      color: white;
-      border: none;
-      width: 100%;
-      margin-top: 20px;
-      box-shadow: 0 0 10px var(--neon-purple);
-    }
-
-    /* --- Container --- */
     .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-
-    /* --- Stats & Audio Controls --- */
-    .dashboard-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 24px;
-    }
-
-    .stat-card {
-      background: var(--card-bg);
-      border: var(--glass-border);
-      padding: 15px;
-      border-radius: var(--radius);
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .stat-card::before {
-      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
-      background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
-    }
-
+    .dashboard-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+    .stat-card { background: var(--card-bg); border: var(--glass-border); padding: 15px; border-radius: var(--radius); text-align: center; position: relative; overflow: hidden; }
+    .stat-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, var(--neon-blue), transparent); }
     .stat-value { font-size: 28px; font-weight: 700; color: var(--text-main); text-shadow: 0 0 10px rgba(255,255,255,0.3); }
     .stat-label { font-size: 12px; color: var(--text-muted); margin-top: 5px; }
 
-    .audio-controls {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-
-    /* --- Form --- */
-    .form-card {
-      background: var(--card-bg);
-      border: var(--glass-border);
-      border-radius: var(--radius);
-      padding: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    }
-
-    .section-title {
-      font-size: 14px; color: var(--neon-blue);
-      text-transform: uppercase; letter-spacing: 1px;
-      margin-bottom: 15px; display: flex; justify-content: space-between;
-    }
-
+    .audio-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+    .form-card { background: var(--card-bg); border: var(--glass-border); border-radius: var(--radius); padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+    .section-title { font-size: 14px; color: var(--neon-blue); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; display: flex; justify-content: space-between; }
     .input-group { margin-bottom: 16px; }
     .input-label { display: block; margin-bottom: 8px; font-size: 13px; color: var(--text-muted); }
-    
-    .form-control {
-      width: 100%; padding: 12px;
-      background: rgba(0,0,0,0.3);
-      border: 1px solid #333;
-      border-radius: 8px;
-      color: white; font-family: 'Sarabun'; font-size: 16px;
-      transition: 0.3s;
-    }
-    .form-control:focus {
-      outline: none; border-color: var(--neon-blue);
-      box-shadow: 0 0 10px rgba(0, 243, 255, 0.1);
-    }
+    .form-control { width: 100%; padding: 12px; background: rgba(0,0,0,0.3); border: 1px solid #333; border-radius: 8px; color: white; font-family: 'Sarabun'; font-size: 16px; transition: 0.3s; }
+    .form-control:focus { outline: none; border-color: var(--neon-blue); box-shadow: 0 0 10px rgba(0, 243, 255, 0.1); }
     select.form-control { -webkit-appearance: none; }
 
-    /* --- List --- */
-    .med-card {
-      background: var(--card-bg);
-      border: var(--glass-border);
-      border-radius: var(--radius);
-      padding: 16px; margin-bottom: 16px;
-      border-left: 3px solid var(--text-muted);
-      transition: 0.3s;
-    }
+    .med-card { background: var(--card-bg); border: var(--glass-border); border-radius: var(--radius); padding: 16px; margin-bottom: 16px; border-left: 3px solid var(--text-muted); transition: 0.3s; }
     .med-card.active { border-left-color: var(--neon-green); box-shadow: 0 0 15px rgba(10, 255, 104, 0.05); }
     .med-card.overdue { border-left-color: var(--neon-red); box-shadow: 0 0 15px rgba(255, 0, 60, 0.1); border-color: rgba(255,0,60,0.3); }
-    
     .med-name { font-size: 18px; font-weight: 600; color: white; }
     .med-time { font-family: 'Orbitron'; font-size: 20px; color: var(--neon-blue); margin: 8px 0; }
     .status-text { font-size: 12px; color: var(--text-muted); text-transform: uppercase; float: right; }
 
-    /* --- Modal Popup (Guide) --- */
-    .modal {
-        position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-        background: rgba(0,0,0,0.8);
-        backdrop-filter: blur(8px);
-        z-index: 2000;
-        display: none; opacity: 0;
-        transition: opacity 0.3s ease;
-        align-items: center; justify-content: center;
-        padding: 20px;
-    }
+    /* Guide & Modal */
+    .modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); z-index: 2000; display: none; opacity: 0; transition: opacity 0.3s ease; align-items: center; justify-content: center; padding: 20px; }
     .modal.show { display: flex; opacity: 1; }
-    
-    .modal-content {
-        background: #1a1a24;
-        border: 1px solid var(--neon-blue);
-        box-shadow: 0 0 30px rgba(0, 243, 255, 0.15);
-        width: 100%; max-width: 500px;
-        max-height: 85vh;
-        border-radius: 20px;
-        display: flex; flex-direction: column;
-        overflow: hidden;
-        animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
+    .modal-content { background: #1a1a24; border: 1px solid var(--neon-blue); box-shadow: 0 0 30px rgba(0, 243, 255, 0.15); width: 100%; max-width: 500px; max-height: 85vh; border-radius: 20px; display: flex; flex-direction: column; overflow: hidden; animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
     @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-
-    .modal-header {
-        padding: 20px;
-        background: linear-gradient(90deg, rgba(0, 243, 255, 0.1), transparent);
-        border-bottom: 1px solid rgba(255,255,255,0.1);
-        display: flex; justify-content: space-between; align-items: center;
-    }
+    .modal-header { padding: 20px; background: linear-gradient(90deg, rgba(0, 243, 255, 0.1), transparent); border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; }
     .modal-title { font-family: 'Sarabun'; font-weight: 700; font-size: 20px; color: var(--neon-blue); }
     .close-btn { background: none; border: none; color: white; font-size: 24px; cursor: pointer; }
-    
-    .modal-body {
-        padding: 20px;
-        overflow-y: auto;
-        color: #e2e8f0;
-        font-size: 15px;
-        line-height: 1.6;
-    }
-    
-    /* Guide Styling */
+    .modal-body { padding: 20px; overflow-y: auto; color: #e2e8f0; font-size: 15px; line-height: 1.6; }
     .guide-section { margin-bottom: 20px; }
     .guide-head { color: var(--neon-blue); font-weight: 700; font-size: 16px; margin-bottom: 8px; }
     .guide-list { list-style: none; padding: 0; margin: 0; }
-    .guide-list li { 
-        position: relative; padding-left: 15px; margin-bottom: 6px; color: #cbd5e1;
-    }
-    .guide-list li::before {
-        content: '•'; position: absolute; left: 0; color: var(--text-muted);
-    }
+    .guide-list li { position: relative; padding-left: 15px; margin-bottom: 6px; color: #cbd5e1; }
+    .guide-list li::before { content: '•'; position: absolute; left: 0; color: var(--text-muted); }
     .text-red { color: var(--neon-red); font-weight: 700; text-shadow: 0 0 5px rgba(255, 0, 60, 0.5); }
     .text-bold { font-weight: 700; color: white; }
 
-    /* --- Footer & Counter --- */
-    footer {
-        text-align: center;
-        padding: 40px 20px;
-        color: var(--text-muted);
-        font-size: 14px;
-        border-top: 1px solid rgba(255,255,255,0.05);
-        margin-top: 40px;
-    }
+    footer { text-align: center; padding: 40px 20px; color: var(--text-muted); font-size: 14px; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 40px; }
     .dev-credit { color: var(--neon-blue); font-weight: 500; }
     .counter { margin-top: 15px; opacity: 0.7; transition: opacity 0.3s; }
     .counter:hover { opacity: 1; }
     .counter img { border-radius: 4px; }
 
-    /* --- Toast --- */
-    .toast {
-      position: fixed; bottom: 20px; left: 20px; right: 20px;
-      background: rgba(15, 23, 42, 0.95);
-      border: 1px solid var(--neon-blue);
-      color: white; padding: 15px; border-radius: 12px;
-      display: flex; align-items: center; gap: 12px;
-      transform: translateY(150%); transition: 0.3s; z-index: 3000;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-    }
+    .toast { position: fixed; bottom: 20px; left: 20px; right: 20px; background: rgba(15, 23, 42, 0.95); border: 1px solid var(--neon-blue); color: white; padding: 15px; border-radius: 12px; display: flex; align-items: center; gap: 12px; transform: translateY(150%); transition: 0.3s; z-index: 3000; box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); }
     .toast.show { transform: translateY(0); }
     .toast-warning { border-color: var(--neon-red); box-shadow: 0 0 10px rgba(255, 0, 60, 0.3); }
 
+    /* iOS Warning Banner */
+    #iosBanner {
+        display: none;
+        background: rgba(255, 165, 0, 0.15);
+        border: 1px solid orange;
+        color: #fbbf24;
+        padding: 15px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        font-size: 14px;
+        line-height: 1.6;
+        text-align: left;
+    }
   </style>
 </head>
 <body>
@@ -302,7 +150,7 @@
     <div class="brand">
       <img src="fenta_logo.png" alt="Logo" onerror="this.style.display='none'">
       <div class="brand-text">
-        <h1>ระบบแจ้งเตือนการให้ยา Fentanyl Patch</h1>
+        <h1>Fentanyl Care</h1>
         <p>High Alert Medication</p>
       </div>
     </div>
@@ -315,13 +163,18 @@
 
   <div class="container">
     
+    <div id="iosBanner">
+        <b>📱 สำหรับผู้ใช้ iPhone:</b><br>
+        ระบบจะไม่สามารถแจ้งเตือนได้ หากเปิดผ่าน Safari ปกติ<br>
+        <br>
+        1. กดปุ่มแชร์ด้านล่าง (สี่เหลี่ยมมีลูกศร)<br>
+        2. เลือก <b>"เพิ่มไปยังหน้าจอโฮม" (Add to Home Screen)</b><br>
+        3. เข้าใช้งานผ่านไอคอนแอปใหม่
+    </div>
+
     <div class="audio-controls">
-        <button class="btn btn-primary" onclick="testAlarm()">
-            🔊 ทดสอบเสียง
-        </button>
-        <button class="btn btn-danger" onclick="stopAlarm()">
-            🔇 ปิดเสียง
-        </button>
+        <button class="btn btn-primary" onclick="testAlarm()">🔊 ทดสอบเสียง</button>
+        <button class="btn btn-danger" onclick="stopAlarm()">🔇 ปิดเสียง</button>
     </div>
 
     <div class="dashboard-row">
@@ -343,12 +196,10 @@
       
       <form id="medForm">
         <input type="hidden" id="medId">
-        
         <div class="input-group">
             <label class="input-label">ชื่อยา</label>
             <input type="text" id="medName" class="form-control" value="Fentanyl Patch" required>
         </div>
-
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
             <div class="input-group">
                 <label class="input-label">ความถี่</label>
@@ -363,12 +214,10 @@
                 <input type="number" id="qty" class="form-control" value="1" min="1">
             </div>
         </div>
-
         <div class="input-group">
             <label class="input-label">เวลาเริ่มแปะ</label>
             <input type="datetime-local" id="startAt" class="form-control">
         </div>
-
         <div style="display: flex; gap: 10px; margin-top: 20px;">
             <button type="submit" class="btn btn-primary" style="flex:1;" id="submitBtn">บันทึกข้อมูล</button>
             <button type="button" class="btn btn-danger" style="flex:0.4;" onclick="resetForm()" id="cancelBtn">ล้างค่า</button>
@@ -376,9 +225,7 @@
       </form>
     </div>
 
-    <button class="btn btn-guide" onclick="openGuide()">
-        📖 เปิดคู่มือการใช้งาน (Manual)
-    </button>
+    <button class="btn btn-guide" onclick="openGuide()">📖 เปิดคู่มือการใช้งาน (Manual)</button>
 
     <br>
 
@@ -403,7 +250,6 @@
               <button class="close-btn" onclick="closeGuide()">×</button>
           </div>
           <div class="modal-body">
-              
               <div style="text-align: center; margin-bottom: 20px;">
                   <a href="handbook_fenta.png" target="_blank" style="text-decoration: none; width: 100%;">
                       <button class="btn btn-primary" style="width: 100%; justify-content: center; box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);">
@@ -420,7 +266,6 @@
                       <li><span class="text-bold">ขน:</span> ใช้กรรไกรเล็มสั้น <span class="text-red">ห้ามโกน</span> (ป้องกันการระคายเคือง/ดูดซึมยาเร็วเกินไป)</li>
                   </ul>
               </div>
-
               <div class="guide-section">
                   <div class="guide-head">2) การเปิดซองและลอกแผ่น</div>
                   <ul class="guide-list">
@@ -428,7 +273,6 @@
                       <li>ลอกฟิล์มทีละฝั่ง ห้ามจับด้านกาว</li>
                   </ul>
               </div>
-
               <div class="guide-section">
                   <div class="guide-head">3) การติดแผ่นยา</div>
                   <ul class="guide-list">
@@ -437,7 +281,6 @@
                       <li>หลังติดเสร็จ ให้ล้างมือด้วยสบู่ทันที</li>
                   </ul>
               </div>
-
               <div class="guide-section">
                   <div class="guide-head" style="color: var(--neon-red);">4) ข้อควรระวัง (Strictly)</div>
                   <ul class="guide-list">
@@ -460,66 +303,57 @@
   </div>
 
   <script>
-    /* ===== Core Variables ===== */
-    const DB_KEY = 'fenta_future_v4_ios_fixed';
+    const DB_KEY = 'fenta_ios_fixed_v16';
     let items = [];
-    
-    // --- Audio System Global Variables ---
     let audioCtx = null;
     let isAudioUnlocked = false;
 
-    /* ===== Initialization ===== */
     window.addEventListener('DOMContentLoaded', () => {
+        checkIOSStandalone(); // Check iOS Mode immediately
         const now = new Date();
         const localISO = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
         document.getElementById('startAt').value = localISO;
-        
         loadData();
         updateClock();
         setInterval(updateClock, 1000);
-        setInterval(checkDueMedications, 5000); // Check every 5 seconds
+        setInterval(checkDueMedications, 5000);
     });
 
-    /* ===== Audio System (Auto Unlock) ===== */
-    // ฟังก์ชันนี้จะทำงานทันทีที่แตะหน้าจอครั้งแรก เพื่อปลดล็อคเสียง
+    // --- iOS Check Logic ---
+    function checkIOSStandalone() {
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        const isStandalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
+        
+        if (isIOS && !isStandalone) {
+            document.getElementById('iosBanner').style.display = 'block';
+        }
+    }
+
+    // --- Audio Logic ---
     function unlockAudio() {
         if (isAudioUnlocked) return;
-        
         if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         if (audioCtx.state === 'suspended') audioCtx.resume();
-
-        // เล่นเสียงเงียบสั้นๆ เพื่อหลอก Browser ว่ามีการใช้งานแล้ว
         const buffer = audioCtx.createBuffer(1, 1, 22050);
         const source = audioCtx.createBufferSource();
         source.buffer = buffer;
         source.connect(audioCtx.destination);
         source.start(0);
-
         isAudioUnlocked = true;
-        
-        // ลบ Listener ออกเพื่อไม่ให้ทำงานซ้ำ
         document.removeEventListener('click', unlockAudio);
         document.removeEventListener('touchstart', unlockAudio);
-        document.removeEventListener('keydown', unlockAudio);
     }
-
-    // ดักจับทุกการแตะหน้าจอเพื่อปลดล็อคเสียง
     document.addEventListener('click', unlockAudio);
     document.addEventListener('touchstart', unlockAudio);
-    document.addEventListener('keydown', unlockAudio);
 
-    // ฟังก์ชันสร้างเสียง Beep (High-Low Pattern)
     function beep(freq, duration, type, startTime) {
         if (!audioCtx) return;
-        
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
-        
         osc.type = type;
         osc.frequency.value = freq;
         osc.connect(gain);
         gain.connect(audioCtx.destination);
-        
         osc.start(startTime);
         gain.gain.setValueAtTime(0.5, startTime);
         gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
@@ -527,97 +361,63 @@
     }
 
     function playAlarm() {
-        // พยายาม Init Audio อีกครั้งเผื่อยังไม่ได้ทำ
-        if(!audioCtx) initAudioDirect();
-
+        if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if(audioCtx.state === 'suspended') audioCtx.resume();
         const now = audioCtx.currentTime;
-        
-        // เล่นเสียง Pattern: ติ๊ด-ติ๊ด-ติ๊ด (Medical Alarm Style)
-        // 10 วินาที
         for(let i=0; i<15; i++) { 
-            // High Beep
             beep(880, 0.1, 'square', now + (i * 0.8));
-            // Low Beep
             beep(550, 0.1, 'square', now + (i * 0.8) + 0.15);
         }
     }
 
-    function initAudioDirect() {
-         if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-         if (audioCtx.state === 'suspended') audioCtx.resume();
-    }
-
     function stopAlarm() {
         if(audioCtx && audioCtx.state === 'running') {
-            audioCtx.suspend().then(() => {
-                 setTimeout(() => { if(audioCtx) audioCtx.resume(); }, 1000);
-            });
+            audioCtx.suspend().then(() => { setTimeout(() => { if(audioCtx) audioCtx.resume(); }, 1000); });
         }
     }
 
     function testAlarm() {
-        unlockAudio(); // Force unlock
-        setTimeout(() => {
-             playAlarm();
-             showToast('🔊 ทดสอบเสียง (ดัง 10 วินาที)', 'info');
-        }, 100);
+        unlockAudio();
+        setTimeout(() => { playAlarm(); showToast('🔊 ทดสอบเสียง', 'info'); }, 100);
     }
     
     function requestNotification() {
-        // ตรวจสอบ iOS และ Standalone
         const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
         const isStandalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
 
+        if (isIOS && !isStandalone) {
+             alert("⚠️ ต้องเพิ่มไปยังหน้าจอโฮมก่อนครับ ถึงจะเปิดแจ้งเตือนบน iPhone ได้");
+             return;
+        }
+
         if (!("Notification" in window)) {
-            showToast('เครื่องนี้ไม่รองรับการแจ้งเตือน', 'warning');
-        } else if (isIOS && !isStandalone) {
-             alert("⚠️ สำหรับ iPhone:\n\nต้องกดปุ่มแชร์ (Share) ด้านล่าง\nแล้วเลือก 'เพิ่มไปยังหน้าจอโฮม' (Add to Home Screen)\n\nจากนั้นเข้าใช้งานผ่านไอคอนแอปบนหน้าจอ จึงจะเปิดแจ้งเตือนได้ครับ");
+            showToast('เบราว์เซอร์ไม่รองรับ', 'warning');
         } else if (Notification.permission === "granted") {
             showToast('เปิดการแจ้งเตือนไว้แล้ว', 'info');
         } else if (Notification.permission !== "denied") {
             Notification.requestPermission().then(function (permission) {
                 if (permission === "granted") {
-                    showToast('✅ อนุญาตการแจ้งเตือนแล้ว', 'success');
+                    showToast('✅ อนุญาตแล้ว', 'success');
                     new Notification("Fentanyl Care", { body: "ระบบพร้อมแจ้งเตือนครับ", icon: "fenta_logo.png" });
                 }
             });
         }
     }
 
-    /* ===== Modal & UI Logic ===== */
-    function openGuide() {
-        document.getElementById('guideModal').classList.add('show');
-    }
-    function closeGuide() {
-        document.getElementById('guideModal').classList.remove('show');
-    }
-
-    function updateClock() {
-        const now = new Date();
-        document.getElementById('clock').innerText = now.toLocaleTimeString('th-TH', {hour:'2-digit', minute:'2-digit'});
-    }
-
-    function loadData() {
-        try { items = JSON.parse(localStorage.getItem(DB_KEY) || '[]'); } catch { items = []; }
-        render();
-    }
-
-    function saveData() {
-        localStorage.setItem(DB_KEY, JSON.stringify(items));
-        render();
-    }
-
+    // --- Core UI Logic ---
+    function openGuide() { document.getElementById('guideModal').classList.add('show'); }
+    function closeGuide() { document.getElementById('guideModal').classList.remove('show'); }
+    function updateClock() { document.getElementById('clock').innerText = new Date().toLocaleTimeString('th-TH', {hour:'2-digit', minute:'2-digit'}); }
+    
+    function loadData() { try { items = JSON.parse(localStorage.getItem(DB_KEY) || '[]'); } catch { items = []; } render(); }
+    function saveData() { localStorage.setItem(DB_KEY, JSON.stringify(items)); render(); }
+    
     function getNextDoseTime(startISO, hours) {
         const start = new Date(startISO);
         const intervalMs = hours * 3600000;
-        
         let next = new Date(start.getTime() + intervalMs);
         const now = new Date();
-        
-        // ถ้าเวลาที่คำนวณได้มันผ่านไปแล้ว ให้บวกเพิ่มจนกว่าจะเป็นอนาคต (Auto-Catchup)
-        while(next < now) {
-             next = new Date(next.getTime() + intervalMs);
-        }
+        while(next < now) { next = new Date(next.getTime() + intervalMs); }
         return next.toISOString();
     }
 
@@ -625,131 +425,64 @@
         const diff = new Date(nextTime) - new Date();
         const hours = Math.floor(diff / 3600000);
         const mins = Math.floor((diff % 3600000) / 60000);
-        
-        if (diff <= 0) return { overdue: true, text: 'กำลังประมวลผล...', hours: 0 };
-        
-        let text = '';
-        if (hours >= 24) text = `อีก ${Math.floor(hours/24)} วัน ${hours%24} ชม.`;
-        else text = `อีก ${hours} ชม. ${mins} นาที`;
-        
+        if (diff <= 0) return { overdue: true, text: 'ประมวลผล...', hours: 0 };
+        let text = hours >= 24 ? `อีก ${Math.floor(hours/24)} วัน ${hours%24} ชม.` : `อีก ${hours} ชม. ${mins} นาที`;
         return { overdue: false, text, hours };
     }
 
     document.getElementById('medForm').addEventListener('submit', (e) => {
         e.preventDefault();
-        unlockAudio(); // Unlock audio on interaction
+        unlockAudio();
         const name = document.getElementById('medName').value;
         const hours = parseInt(document.getElementById('interval').value);
         const qty = parseInt(document.getElementById('qty').value);
         const start = new Date(document.getElementById('startAt').value).toISOString();
-
-        const newItem = {
-            id: Date.now().toString(36),
-            name, hours, qty, start,
-            nextAt: getNextDoseTime(start, hours),
-            active: true
-        };
-
-        items.push(newItem);
-        saveData();
-        resetForm();
-        showToast('บันทึกข้อมูลสำเร็จ (ระบบจะนับต่ออัตโนมัติ)', 'success');
+        const newItem = { id: Date.now().toString(36), name, hours, qty, start, nextAt: getNextDoseTime(start, hours), active: true };
+        items.push(newItem); saveData(); document.getElementById('medForm').reset();
+        const now = new Date();
+        document.getElementById('startAt').value = new Date(now.getTime() - now.getTimezoneOffset()*60000).toISOString().slice(0,16);
+        showToast('บันทึกสำเร็จ (Auto Renew)', 'success');
     });
 
     function render() {
         const wrap = document.getElementById('listWrap');
-        if(items.length === 0) {
-            wrap.innerHTML = `<div style="text-align:center; padding:40px; color:var(--text-muted); border: 1px dashed var(--text-muted); border-radius:16px;">ไม่พบข้อมูลยาในระบบ</div>`;
-            updateStats();
-            return;
-        }
-
+        if(items.length === 0) { wrap.innerHTML = `<div style="text-align:center; padding:40px; color:var(--text-muted); border: 1px dashed var(--text-muted); border-radius:16px;">ไม่พบข้อมูลยาในระบบ</div>`; updateStats(); return; }
         items.sort((a,b) => new Date(a.nextAt) - new Date(b.nextAt));
-        
         let html = '';
         items.forEach(item => {
             const t = getTimeRemaining(item.nextAt);
             const dateStr = new Date(item.nextAt).toLocaleDateString('th-TH', {day:'numeric', month:'short'});
             const timeStr = new Date(item.nextAt).toLocaleTimeString('th-TH', {hour:'2-digit', minute:'2-digit'});
-
-            html += `
-            <div class="med-card ${item.active ? (t.overdue ? 'overdue' : 'active') : ''}" style="${!item.active ? 'opacity:0.5' : ''}">
-                <div style="display:flex; justify-content:space-between;">
-                    <span class="med-name">${item.name} <small style="color:var(--text-muted); font-size:12px;">(x${item.qty})</small></span>
-                    <span class="status-text">${item.active ? 'ทำงาน' : 'หยุด'}</span>
-                </div>
-                <div class="med-time">
-                    ${t.overdue ? '⚠️' : '⏰'} ${dateStr} เวลา ${timeStr}
-                </div>
-                <div style="color:${t.overdue ? 'var(--neon-red)' : 'var(--neon-blue)'}; font-size:14px; font-weight:600;">
-                    ${t.text}
-                </div>
+            html += `<div class="med-card ${item.active ? (t.overdue ? 'overdue' : 'active') : ''}" style="${!item.active ? 'opacity:0.5' : ''}">
+                <div style="display:flex; justify-content:space-between;"><span class="med-name">${item.name} <small style="color:var(--text-muted); font-size:12px;">(x${item.qty})</small></span><span class="status-text">${item.active ? 'ทำงาน' : 'หยุด'}</span></div>
+                <div class="med-time">${t.overdue ? '⚠️' : '⏰'} ${dateStr} เวลา ${timeStr}</div>
+                <div style="color:${t.overdue ? 'var(--neon-red)' : 'var(--neon-blue)'}; font-size:14px; font-weight:600;">${t.text}</div>
                 <div style="display:flex; gap:10px; margin-top:15px;">
-                    <button class="btn ${item.active ? 'btn-danger' : 'btn-primary'}" style="flex:1; height:36px;" onclick="toggle('${item.id}')">
-                        ${item.active ? 'หยุด' : 'เริ่ม'}
-                    </button>
+                    <button class="btn ${item.active ? 'btn-danger' : 'btn-primary'}" style="flex:1; height:36px;" onclick="toggle('${item.id}')">${item.active ? 'หยุด' : 'เริ่ม'}</button>
                     <button class="btn btn-danger" style="flex:0.5; height:36px;" onclick="del('${item.id}')">ลบ</button>
-                </div>
-            </div>`;
+                </div></div>`;
         });
-        wrap.innerHTML = html;
-        updateStats();
+        wrap.innerHTML = html; updateStats();
     }
 
-    function toggle(id) {
-        const i = items.find(x => x.id === id);
-        if(i) { i.active = !i.active; saveData(); }
-    }
-    function del(id) {
-        if(confirm('ยืนยันการลบข้อมูลนี้?')) { items = items.filter(x => x.id !== id); saveData(); }
-    }
-    function resetForm() {
-        document.getElementById('medForm').reset();
-        const now = new Date();
-        document.getElementById('startAt').value = new Date(now.getTime() - now.getTimezoneOffset()*60000).toISOString().slice(0,16);
-    }
-    function updateStats() {
-        document.getElementById('activeCount').innerText = items.filter(i => i.active).length;
-        document.getElementById('dueSoonCount').innerText = items.filter(i => i.active && getTimeRemaining(i.nextAt).hours < 24).length;
-    }
-    function clearAllData() {
-        if(confirm('รีเซ็ตระบบ: ต้องการลบข้อมูลทั้งหมดหรือไม่?')) { items = []; saveData(); }
-    }
-    function showToast(msg, type) {
-        const t = document.getElementById('toast');
-        document.getElementById('toastMessage').innerText = msg;
-        t.className = 'toast show ' + (type==='warning'?'toast-warning':'');
-        setTimeout(() => t.classList.remove('show'), 3000);
-    }
+    function toggle(id) { const i = items.find(x => x.id === id); if(i) { i.active = !i.active; saveData(); } }
+    function del(id) { if(confirm('ยืนยันลบ?')) { items = items.filter(x => x.id !== id); saveData(); } }
+    function resetForm() { document.getElementById('medForm').reset(); }
+    function updateStats() { document.getElementById('activeCount').innerText = items.filter(i => i.active).length; document.getElementById('dueSoonCount').innerText = items.filter(i => i.active && getTimeRemaining(i.nextAt).hours < 24).length; }
+    function clearAllData() { if(confirm('ลบข้อมูลทั้งหมด?')) { items = []; saveData(); } }
+    function showToast(msg, type) { const t = document.getElementById('toast'); document.getElementById('toastMessage').innerText = msg; t.className = 'toast show ' + (type==='warning'?'toast-warning':''); setTimeout(() => t.classList.remove('show'), 3000); }
 
-    // --- MAIN CHECKER ---
     function checkDueMedications() {
         const now = new Date();
         let trigger = false;
-        
         items.forEach(item => {
-            // ถ้าถึงเวลา (หรือเลยเวลามาแล้ว)
             if(item.active && new Date(item.nextAt) <= now) {
-                showToast(`ครบกำหนด: ${item.name}`, 'warning');
                 trigger = true;
-                
-                // AUTO RENEW: อัปเดตเวลาครั้งถัดไปอัตโนมัติ (+72 ชม.)
                 item.nextAt = getNextDoseTime(item.nextAt, item.hours);
-                
-                // Show Notification
-                if (Notification.permission === "granted") {
-                    new Notification("Fentanyl Alert!", {
-                        body: `ถึงเวลาให้ยา: ${item.name}`,
-                        icon: "fenta_logo.png"
-                    });
-                }
+                if (Notification.permission === "granted") { new Notification("Fentanyl Alert!", { body: `ถึงเวลา: ${item.name}`, icon: "fenta_logo.png" }); }
             }
         });
-        
-        if(trigger) {
-            playAlarm();
-            saveData(); // บันทึกเวลาใหม่ลงเครื่อง
-        }
+        if(trigger) { playAlarm(); saveData(); }
     }
   </script>
 </body>
